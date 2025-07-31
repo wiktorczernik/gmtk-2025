@@ -120,7 +120,6 @@ NavMeshSettings:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
 --- !u!4 &14069726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4790302071202098, guid: cd5e7f64f2260438cb7830953c384a5e, type: 3}
@@ -128,8 +127,6 @@ Transform:
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &293989978
 =======
-=======
->>>>>>> Stashed changes
 --- !u!28 &229740734
 Texture2D:
   m_ObjectHideFlags: 0
@@ -497,9 +494,6 @@ MonoBehaviour:
   customPoints: []
   handleObject: {fileID: 0}
 --- !u!1 &280880517
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +502,6 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< Updated upstream
 <<<<<<< Updated upstream
   - component: {fileID: 293989982}
   - component: {fileID: 293989981}
@@ -566,8 +559,6 @@ MonoBehaviour:
   BlendHint: 0
 --- !u!4 &293989982
 =======
-=======
->>>>>>> Stashed changes
   - component: {fileID: 280880518}
   - component: {fileID: 280880522}
   - component: {fileID: 280880521}
@@ -581,16 +572,12 @@ MonoBehaviour:
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &280880518
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
 <<<<<<< Updated upstream
   m_GameObject: {fileID: 293989978}
   serializedVersion: 2
@@ -603,8 +590,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &293989984
 =======
-=======
->>>>>>> Stashed changes
   m_GameObject: {fileID: 280880517}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
@@ -691,16 +676,12 @@ MeshFilter:
   m_GameObject: {fileID: 280880517}
   m_Mesh: {fileID: 521386530}
 --- !u!114 &280880522
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
 <<<<<<< Updated upstream
   m_GameObject: {fileID: 293989978}
   m_Enabled: 1
@@ -729,8 +710,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damping: 0
 =======
-=======
->>>>>>> Stashed changes
   m_GameObject: {fileID: 280880517}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -18053,9 +18032,6 @@ MonoBehaviour:
   terrainYStart: 0
   terrainHMRows: 0
   terrainHMCols: 0
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
 --- !u!1 &330585543
 GameObject:
@@ -18349,7 +18325,6 @@ MonoBehaviour:
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
 --- !u!1001 &429631913
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18448,8 +18423,6 @@ PrefabInstance:
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
 =======
-=======
->>>>>>> Stashed changes
 --- !u!114 &509285959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18929,9 +18902,6 @@ MonoBehaviour:
   markerStartUVY: 0.28907776
   customPoints: []
   handleObject: {fileID: 0}
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
 --- !u!1 &832575517
 GameObject:
@@ -18983,11 +18953,8 @@ Transform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
 --- !u!1 &864464688
 =======
-=======
->>>>>>> Stashed changes
 --- !u!28 &835370124
 Texture2D:
   m_ObjectHideFlags: 0
@@ -19035,9 +19002,6 @@ Texture2D:
     size: 0
     path: 
 --- !u!1 &860327132
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
 GameObject:
   m_ObjectHideFlags: 0
@@ -19047,29 +19011,22 @@ GameObject:
   serializedVersion: 6
   m_Component:
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
   - component: {fileID: 864464690}
   - component: {fileID: 864464689}
   m_Layer: 0
   m_Name: Car Focus
 =======
-=======
->>>>>>> Stashed changes
   - component: {fileID: 860327133}
   - component: {fileID: 860327135}
   - component: {fileID: 860327134}
   m_Layer: 0
   m_Name: Connection Objects
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 --- !u!114 &864464689
 MonoBehaviour:
@@ -19088,15 +19045,11 @@ MonoBehaviour:
 =======
 --- !u!4 &860327133
 >>>>>>> Stashed changes
-=======
---- !u!4 &860327133
->>>>>>> Stashed changes
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
 <<<<<<< Updated upstream
   m_GameObject: {fileID: 864464688}
   serializedVersion: 2
@@ -19108,8 +19061,6 @@ Transform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 =======
-=======
->>>>>>> Stashed changes
   m_GameObject: {fileID: 860327132}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -19353,9 +19304,6 @@ MonoBehaviour:
   m_Script: {fileID: -1994553136, guid: f56d46228aee4734f9114056c53bb57e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
 --- !u!1 &1408946027
 GameObject:
@@ -21129,13 +21077,9 @@ SceneRoots:
   - {fileID: 2042710197}
   - {fileID: 1408946031}
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
   - {fileID: 293989982}
   - {fileID: 864464690}
   - {fileID: 429631913}
-=======
-  - {fileID: 1727982735}
->>>>>>> Stashed changes
 =======
   - {fileID: 1727982735}
 >>>>>>> Stashed changes

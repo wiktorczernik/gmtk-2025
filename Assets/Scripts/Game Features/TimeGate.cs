@@ -15,7 +15,7 @@ public class TimeGate : MonoBehaviour
 
     #region Public Variables
     [Header("Public Variables")]
-    public UnityEvent<Transform> OnCartPass; // TODO: replace 'Transform' with the car component
+    public UnityEvent<KartController> OnCartPass; // TODO: replace 'Transform' with the car component
     public UnityEvent OnActivate;
     public UnityEvent OnDeactivate;
     #endregion
@@ -23,14 +23,15 @@ public class TimeGate : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!isActive) return;
+        if (!other.CompareTag("Player")) return;
         SetActive(false);
 
-        OnCartPass?.Invoke(other.GetComponent<Transform>()); // TODO: replace 'Transform' with the car component
+        OnCartPass?.Invoke(other.GetComponent<KartController>()); // TODO: replace 'Transform' with the car component
 
         // TODO: if the collider is a clone, do not add the time.
         //       So e.g. if (other.GetComponent<CARCOMPONENT>().isClone) return;
 
-        TimerController.Instance.time += timeBonus;
+        TimerController.time += timeBonus;
     }
 
     public void SetActive(bool state = true)

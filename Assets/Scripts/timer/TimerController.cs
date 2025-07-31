@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,10 +17,7 @@ public class TimerController : MonoBehaviour
     [SerializeField] private bool _defaultActive = false;
     #endregion
 
-    #region UnityEvents
-    [Header("UnityEvents")]
-    [SerializeField] private UnityEvent _timeEnd;
-    #endregion
+    public static event Action onEnd;
 
     #region Variables
     [Header("Variables")]
@@ -28,16 +26,15 @@ public class TimerController : MonoBehaviour
     #endregion
 
     #region Public Variables
-    public static TimerController Instance;
-    public double time
+    public static double time
     {
         get
         {
-            return _time;
+            return main._time;
         }
         set
         {
-            _time = value;
+            main._time = value;
         }
     }
     public TextMeshProUGUI timerText
@@ -51,28 +48,27 @@ public class TimerController : MonoBehaviour
             _timerText = value;
         }
     }
-    public bool active
+    public static bool active
     {
         get
         {
-            return _active;
+            return main._active;
         }
         set
         {
-            _active = value;
+            main._active = value;
         }
     }
     #endregion
+    static TimerController main;
 
+
+    private void Awake()
+    {
+        main = this;
+    }
     void Start()
     {
-        if (Instance != null)
-        {
-            Debug.LogWarning("More than one instance of TimerController!");
-            Destroy(gameObject);
-        }
-        else Instance = this;
-
         if (timerText == null || _timerUI == null)
         {
             Debug.LogWarning("Objects was not setup!");
@@ -95,8 +91,7 @@ public class TimerController : MonoBehaviour
         if (time <= 0 && active)
         {
             active = false;
-            _timeEnd.Invoke();
-            GameManager.Instance.OnGameLoose.Invoke();
+            onEnd.Invoke();
             _timerUI.SetActive(false);
         }
     }

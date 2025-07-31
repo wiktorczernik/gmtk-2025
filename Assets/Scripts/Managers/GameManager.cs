@@ -1,31 +1,28 @@
+using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
-    
-    public UnityEvent OnGameStart; //* Called When Game Starts
-    public UnityEvent OnLapCompleted; //* Called After Finishing One Lap, Check -> PlayerCollisionTrigger.cs
-    public UnityEvent AllLapsCompleted; //* Win The Game
-    public UnityEvent OnGameLoose; //* Called When Game Is Lost -> For Now By Timer
+    public static event Action onGameStart; //* Called When Game Starts
+    public static event Action onLapCompleted; //* Called After Finishing One Lap, Check -> PlayerCollisionTrigger.cs
+    public static event Action onGameEnd; //* Called When Game Is Lost -> For Now By Timer
 
-    void Awake()
+    public static void TriggerLapCompletion()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
 
     }
 
-    void Start()
+    IEnumerator Start()
     {
-        OnGameStart.Invoke(); //* For Now, Game Starts Automatically
+        yield return null;
+        onGameStart?.Invoke();
+        TimerController.onEnd += OnTimeEnd;
+        TimerController.active = true;
+    }
+
+    void OnTimeEnd()
+    {
+
     }
 }

@@ -18,7 +18,7 @@ public class AddTimeS : MonoBehaviour
 
     public void AddTime()
     {
-        _timerObject.GetComponent<TimerController>().time += _time;
+        TimerController.time += _time;
         _timerObjectCopy = Instantiate(_timerObject);
         GameObject _timerObjectChild = _timerObjectCopy.transform.GetChild(0).gameObject;
         GameObject _timerText = _timerObjectCopy.transform.GetChild(1).gameObject;

@@ -3,18 +3,13 @@ using UnityEngine.Events;
 
 public class TimeGate : MonoBehaviour
 {
-    #region Fields
-    [Header("Fields")]
-    [SerializeField] private float timeBonus = 5f;
-    #endregion
-
     #region Variables
     [Header("Variables")]
     [SerializeField] private bool isActive = true;
     #endregion
 
-    #region Public Variables
-    [Header("Public Variables")]
+    #region Unity Events
+    [Header("UnityEvents")]
     public UnityEvent<KartController> OnCartPass; // TODO: replace 'Transform' with the car component
     public UnityEvent OnActivate;
     public UnityEvent OnDeactivate;
@@ -30,8 +25,6 @@ public class TimeGate : MonoBehaviour
 
         // TODO: if the collider is a clone, do not add the time.
         //       So e.g. if (other.GetComponent<CARCOMPONENT>().isClone) return;
-
-        TimerController.time += timeBonus;
     }
 
     public void SetActive(bool state = true)

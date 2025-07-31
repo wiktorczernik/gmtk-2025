@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 1752473993012165028}
   - component: {fileID: 6541800619112727487}
   - component: {fileID: 4985897883081355822}
+  - component: {fileID: 8267671791947489474}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -297,11 +298,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6be20e700619b84aae80cc8d8e05ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBonus: 5
   isActive: 1
   OnCartPass:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8267671791947489474}
+        m_TargetAssemblyTypeName: AddTimeS, Assembly-CSharp
+        m_MethodName: AddTime
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnActivate:
     m_PersistentCalls:
       m_Calls: []
@@ -382,3 +394,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8267671791947489474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6867033983388330989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbebc59dd4f25ba4ba26346cd27546c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timerObject: {fileID: 0}
+  _time: 5

@@ -3,21 +3,35 @@ using UnityEngine;
 
 public class LapManager : MonoBehaviour
 {
-    [SerializeField] GameObject LapsUI;
-    [SerializeField] private TextMeshProUGUI _lapText;
+    static LapManager main;
 
-    private int _currentLap = 1;
+    #region Game Objects
+    [Header("GameObjects")]
+    [SerializeField] TextMeshProUGUI _lapText;
+    #endregion
+
+    #region Variables
+    private int _currentLap = 0;
+    #endregion
+
+    #region Public Variables
     public static int currentLap
     {
         get => main._currentLap;
         private set => main._currentLap = value;
     }
-
-    static LapManager main;
+    #endregion
 
     void Awake()
     {
         main = this;
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (!collision.CompareTag("Player")) return;
+
+        IncreaseLapCounter();
     }
 
     [ContextMenu("Increase Lap Counter")]

@@ -7,52 +7,24 @@ public class LapManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _lapText;
 
     private int _currentLap = 1;
-    public int CurrentLap
+    public static int currentLap
     {
-        get => _currentLap;
-        private set => _currentLap = value;
+        get => main._currentLap;
+        private set => main._currentLap = value;
     }
 
-    [SerializeField] private int TotalLaps = 3;
+    static LapManager main;
 
     void Awake()
     {
-        //GameManager.Instance.OnLapCompleted.AddListener(IncreaseLapCounter);
-        //GameManager.Instance.OnGameLoose.AddListener(TestGameLoose);
+        main = this;
     }
 
     [ContextMenu("Increase Lap Counter")]
     public void IncreaseLapCounter()
     {
-        CurrentLap++;
+        currentLap++;
 
-        if (CheckForLapCompletion())
-            return;
-
-        _lapText.text = $"{CurrentLap} / {TotalLaps}";
-    }
-
-    private bool CheckForLapCompletion()
-    {
-        if (CurrentLap > TotalLaps)
-        {
-            GameManager.Instance.AllLapsCompleted.Invoke();
-            return true;
-
-            //? Win The Game???
-        }
-
-        return false;
-    }
-
-
-    public void TestGameWin()
-    {
-        Debug.Log("Game Win");
-    }
-
-    public void TestGameLost()
-    {
-        Debug.Log("Game Lost");
+        _lapText.text = $"{currentLap}th Lap";
     }
 }

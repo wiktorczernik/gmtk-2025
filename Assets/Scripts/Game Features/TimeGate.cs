@@ -30,7 +30,7 @@ public class TimeGate : MonoBehaviour
         // TODO: if the collider is a clone, do not add the time.
         //       So e.g. if (other.GetComponent<CARCOMPONENT>().isClone) return;
 
-        TimerController.Instance.time += timeBonus;
+        TimerController.time += timeBonus;
     }
 
     public void SetActive(bool state = true)

@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
     
     public UnityEvent OnGameStart; //* Called When Game Starts
     public UnityEvent OnLapCompleted; //* Called After Finishing One Lap, Check -> PlayerCollisionTrigger.cs
-    public UnityEvent AllLapsCompleted; //* Win The Game
     public UnityEvent OnGameLoose; //* Called When Game Is Lost -> For Now By Timer
 
     void Awake()

@@ -25,26 +25,8 @@ public class LapManager : MonoBehaviour
     public void IncreaseLapCounter()
     {
         CurrentLap++;
-
-        if (CheckForLapCompletion())
-            return;
-
         _lapText.text = $"{CurrentLap} / {TotalLaps}";
     }
-
-    private bool CheckForLapCompletion()
-    {
-        if (CurrentLap > TotalLaps)
-        {
-            GameManager.Instance.AllLapsCompleted.Invoke();
-            return true;
-
-            //? Win The Game???
-        }
-
-        return false;
-    }
-
 
     public void TestGameWin()
     {

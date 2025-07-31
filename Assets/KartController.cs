@@ -63,7 +63,7 @@ public class KartController : MonoBehaviour
         float forwardSpeed = groundedForwardSpeed;
         RaycastHit hitInfo;
         Debug.Log(isGrounded);
-        bool hit = Physics.SphereCast(sphere.position, groundCheckRadius, Vector3.down, out hitInfo, groundMaxDistance);
+        bool hit = Physics.SphereCast(sphere.position+new Vector3(0,0.1f), groundCheckRadius, Vector3.down, out hitInfo, groundMaxDistance);
         if (hit)
         {
             isGrounded = true;

@@ -21,6 +21,7 @@ public class TimerController : MonoBehaviour
     #endregion
 
     #region Public Variables
+    public static TimerController Instance;
     public double time
     {
         get
@@ -58,6 +59,13 @@ public class TimerController : MonoBehaviour
 
     void Start()
     {
+        if (Instance != null)
+        {
+            Debug.LogWarning("More than one instance of TimerController!");
+            Destroy(gameObject);
+        }
+        else Instance = this;
+
         if (timerText == null || _timerUI == null)
         {
             Debug.LogWarning("Objects was not setup!");

@@ -4,7 +4,7 @@ using UnityEngine;
 public class LapManager : MonoBehaviour
 {
     [SerializeField] GameObject LapsUI;
-    [SerializeField] private TextMeshProUGUI _timerText;
+    [SerializeField] private TextMeshProUGUI _lapText;
 
     private int _currentLap = 1;
     public int CurrentLap
@@ -18,7 +18,6 @@ public class LapManager : MonoBehaviour
     void Awake()
     {
         //GameManager.Instance.OnLapCompleted.AddListener(IncreaseLapCounter);
-        //GameManager.Instance.OnLapCompleted.AddListener(CheckForLapCompletion);
         //GameManager.Instance.OnGameLoose.AddListener(TestGameLoose);
     }
 
@@ -30,7 +29,7 @@ public class LapManager : MonoBehaviour
         if (CheckForLapCompletion())
             return;
 
-        _timerText.text = $"{CurrentLap} / {TotalLaps}";
+        _lapText.text = $"{CurrentLap} / {TotalLaps}";
     }
 
     private bool CheckForLapCompletion()

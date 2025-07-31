@@ -237,6 +237,10 @@ MonoBehaviour:
   logIndex: 0
   updateInt: 2
   resourcesFolder: Resources
+<<<<<<< Updated upstream
   projectid: 175390910407286
+=======
+  projectid: 17539089077507
+>>>>>>> Stashed changes
   isHDRP: 0
   isURP: 0

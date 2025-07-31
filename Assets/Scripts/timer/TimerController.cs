@@ -13,6 +13,7 @@ public class TimerController : MonoBehaviour
     [Header("Fields")]
     [SerializeField] private double _defaultTime = 30;
     [SerializeField] private bool _defaultActive = true;
+    [SerializeField] private bool _timerActive = true;
     #endregion
 
     #region Variables
@@ -54,6 +55,17 @@ public class TimerController : MonoBehaviour
             _defaultActive = value;
         }
     }
+    public bool timerActive
+    {
+        get
+        {
+            return _timerActive;
+        }
+        set
+        {
+            _timerActive = value;
+        }
+    }
     #endregion
 
     void Start()
@@ -75,10 +87,17 @@ public class TimerController : MonoBehaviour
 
     void Update()
     {
-        if (time >= 0)
+        if (timerActive)
         {
             time -= Time.deltaTime;
             timerText.text = string.Format("{0:0.00}", time).Replace(',', '.');
+
+            if (time <= 0)
+            {
+                timerActive = false;
+
+                GameManager.Instance.OnGameLoose.Invoke();
+            }
         }
     }
 }

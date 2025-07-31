@@ -88,6 +88,7 @@ public class TimerController : MonoBehaviour
         {
             active = false;
             _timeEnd.Invoke();
+            GameManager.Instance.OnGameLoose.Invoke();
             _timerUI.SetActive(false);
         }
     }

@@ -1,9 +1,6 @@
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class AddTimeS : MonoBehaviour
 {
@@ -12,7 +9,6 @@ public class AddTimeS : MonoBehaviour
     #region GameObjects
     [Header("GameObjects")]
     [SerializeField] private GameObject _timerObject;
-    [SerializeField] private TimerController _timer;
     #endregion
 
     #region Fields
@@ -22,7 +18,7 @@ public class AddTimeS : MonoBehaviour
 
     public void AddTime()
     {
-        _timer.time += _time;
+        _timerObject.GetComponent<TimerController>().time += _time;
         _timerObjectCopy = Instantiate(_timerObject);
         GameObject _timerObjectChild = _timerObjectCopy.transform.GetChild(0).gameObject;
         GameObject _timerText = _timerObjectCopy.transform.GetChild(1).gameObject;

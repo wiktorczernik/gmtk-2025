@@ -365,11 +365,6 @@ Texture2D:
     offset: 0
     size: 0
     path: 
---- !u!4 &266160808 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4373654682171891100, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
-  m_PrefabInstance: {fileID: 8826765010606211070}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &293989978
 GameObject:
   m_ObjectHideFlags: 0
@@ -28037,7 +28032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7acfe67a94d6a454b800102891fbf93a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 266160808}
+  car: {fileID: 970382354}
 --- !u!4 &864464690
 Transform:
   m_ObjectHideFlags: 0
@@ -28308,6 +28303,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3afcc21f7f83d4b459b406bdd3f562fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &970382354 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2122842426027376111, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
+  m_PrefabInstance: {fileID: 8826765010606211070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &973145725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30566,12 +30566,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
+      propertyPath: maxSpeed
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
       propertyPath: jumpForce
       value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
+      propertyPath: driftAngle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
+      propertyPath: driftAngleLerp
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
       propertyPath: maxRotationAngle
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
+      propertyPath: targetDriftAngle
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
       propertyPath: groundCheckRadius
@@ -30587,11 +30603,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
       propertyPath: steeringAngleSpeed
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
       propertyPath: rotationAcceleration
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
+      propertyPath: driftSteeringAngleSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
+      propertyPath: normalSteeringAngleSpeed
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

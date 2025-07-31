@@ -4,8 +4,16 @@ public class KartController : MonoBehaviour
 {
     [Header("Steering Settings")]
     public AnimationCurve speedToSteeringCurve;
-    public float steeringAngleSpeed = 0.2f;
+    public float steeringAngleSpeed;
+    public float normalSteeringAngleSpeed;
+    public float driftSteeringAngleSpeed;
     public float steeringLerp = 2f;
+    [SerializeField] private bool isDrifting;
+    [SerializeField] private float driftDir;
+    [SerializeField] private float horizontalAxis;
+    [SerializeField] private float driftAngle;
+    [SerializeField] private float targetDriftAngle;
+    [SerializeField] private float driftAngleLerp;
 
     [Header("Ground Checking Settings")]
     public float groundMaxDistance = 0.5f;
@@ -40,7 +48,7 @@ public class KartController : MonoBehaviour
     [Header("Other")]
     [SerializeField] private float gravity;
     [SerializeField] private float jumpForce;
-    [SerializeField] private bool isDrifting;
+
 
 
     void Update()
@@ -50,12 +58,36 @@ public class KartController : MonoBehaviour
             sphere.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
         }
 
-        isDrifting = (Input.GetKey(KeyCode.LeftShift) && isGrounded);
+        horizontalAxis = Input.GetAxisRaw("Horizontal");
+
+        if (isGrounded && Input.GetKey(KeyCode.LeftShift) && !isDrifting && horizontalAxis != 0 && Input.GetKey(KeyCode.W))
+        {
+            isDrifting = true;
+            driftDir = horizontalAxis;
+        }
+
+        if (!Input.GetKey(KeyCode.LeftShift) || !Input.GetKey(KeyCode.W))
+        {
+            isDrifting = false;
+            driftDir = 0;
+        }
 
         //Align kart to ground
         kartModel.transform.position = transform.position - new Vector3(0, kartModelYModifier);
         kartModel.transform.rotation = Quaternion.Lerp(kartModel.transform.rotation, Quaternion.FromToRotation(kartModel.transform.up, groundNormal) * kartModel.transform.rotation, 0.1f);
         kartModel.transform.localEulerAngles = new Vector3(kartModel.transform.localEulerAngles.x, 0, kartModel.transform.localEulerAngles.z);
+
+        driftAngle = Mathf.Lerp(driftAngle, targetDriftAngle * driftDir, driftAngleLerp*Time.deltaTime);
+        kartModel.transform.eulerAngles += new Vector3(0, driftAngle, 0);
+
+        if (isDrifting)
+        {
+            steeringAngleSpeed = driftSteeringAngleSpeed;
+        }
+        else
+        {
+            steeringAngleSpeed = normalSteeringAngleSpeed;
+        }
     }
 
     private void FixedUpdate()
@@ -83,7 +115,12 @@ public class KartController : MonoBehaviour
 
         sphere.AddForce(-groundedForward * forwardSpeed, ForceMode.VelocityChange);
 
-        Quaternion steeringTargetRot = Quaternion.Euler(Input.GetAxisRaw("Horizontal") * steeringAngleSpeed * speedToSteeringCurve.Evaluate(forwardSpeed) * groundNormal * Time.fixedDeltaTime);
+        if (isDrifting && horizontalAxis != driftDir)
+        {
+            horizontalAxis = 0;
+        }
+
+        Quaternion steeringTargetRot = Quaternion.Euler(horizontalAxis * steeringAngleSpeed * speedToSteeringCurve.Evaluate(forwardSpeed) * groundNormal * Time.fixedDeltaTime);
         Vector3 steeringDeltaAngles = steeringTargetRot.eulerAngles;
         steeringDeltaAngles.x = 0;
         steeringDeltaAngles.z = 0;

@@ -464,14 +464,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2010091787129223645, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
-      propertyPath: _timerText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2010091787129223645, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
-      propertyPath: _defaultActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5406001750816765690, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
       propertyPath: m_Name
       value: Timer UI

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Clone : MonoBehaviour
+public abstract class Clone : MonoBehaviour
 {
-    
+    public abstract void SetFrameState(CloneFrameState state);
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public struct CloneableFrameState
+public struct CloneFrameState
 {
     public Vector3 position;
     public Quaternion rotation;

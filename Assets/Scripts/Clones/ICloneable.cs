@@ -1,4 +1,4 @@
 public interface ICloneable
 {
-    public CloneableFrameState GetFrameState();
+    public CloneFrameState GetFrameState();
 }

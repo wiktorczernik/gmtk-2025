@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TimerController : MonoBehaviour
 {
@@ -12,12 +13,18 @@ public class TimerController : MonoBehaviour
     #region Fields
     [Header("Fields")]
     [SerializeField] private double _defaultTime = 30;
-    [SerializeField] private bool _defaultActive = true;
+    [SerializeField] private bool _defaultActive = false;
+    #endregion
+
+    #region UnityEvents
+    [Header("UnityEvents")]
+    [SerializeField] private UnityEvent _timeEnd;
     #endregion
 
     #region Variables
     [Header("Variables")]
     [SerializeField] private double _time;
+    [SerializeField] private bool _active;
     #endregion
 
     #region Public Variables
@@ -43,15 +50,15 @@ public class TimerController : MonoBehaviour
             _timerText = value;
         }
     }
-    public bool defaultActive
+    public bool active
     {
         get
         {
-            return _defaultActive;
+            return _active;
         }
         set
         {
-            _defaultActive = value;
+            _active = value;
         }
     }
     #endregion
@@ -64,21 +71,24 @@ public class TimerController : MonoBehaviour
             return;
         }
 
-        _timerUI.SetActive(defaultActive);
-
-        if (defaultActive)
-        {
-            time = _defaultTime;
-            timerText.text = time + ".00";
-        }
+        _timerUI.SetActive(_defaultActive);
+        time = _defaultTime;
+        timerText.text = time + ".00";
     }
 
     void Update()
     {
-        if (time >= 0)
+        if (time >= 0 && active)
         {
             time -= Time.deltaTime;
             timerText.text = string.Format("{0:0.00}", time).Replace(',', '.');
+        }
+
+        if (time <= 0 && active)
+        {
+            active = false;
+            _timeEnd.Invoke();
+            _timerUI.SetActive(false);
         }
     }
 }

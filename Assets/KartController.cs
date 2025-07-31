@@ -39,52 +39,15 @@ public class KartController : MonoBehaviour
     [SerializeField] private float direction;
     [Header("Other")]
     [SerializeField] private float gravity;
+    [SerializeField] private float jumpForce;
 
 
     void Update()
     {
-        /*
-        //Set kart model position
-        kartModel.transform.position = sphere.transform.position - new Vector3(0, kartModelYModifier, 0);
-        //Acceleration
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            currentSpeed += acceleration * Time.deltaTime;
+            sphere.AddForce(Vector3.up * jumpForce,ForceMode.VelocityChange);
         }
-        else if (Input.GetKey(KeyCode.S)) //Deceleration
-        {
-            currentSpeed -= deceleration * Time.deltaTime;
-        }
-        else //No input, car returns to 0 speed
-        {
-            if (currentSpeed < 0)
-            {
-                if (currentSpeed + groundforce * Time.deltaTime > 0)
-                {
-                    currentSpeed = 0;
-                }
-                else
-                {
-                    currentSpeed += groundforce * Time.deltaTime;
-                }
-            }
-            else if (currentSpeed > 0)
-            {
-                if (currentSpeed - groundforce * Time.deltaTime < 0)
-                {
-                    currentSpeed = 0;
-                }
-                else
-                {
-                    currentSpeed -= groundforce * Time.deltaTime;
-                }
-            }
-        }
-        currentSpeed = Math.Clamp(currentSpeed, -maxReverseSpeed, maxSpeed);
-        //Handling
-        direction = Input.GetAxisRaw("Horizontal");
-        currentRotation = Mathf.Lerp(currentRotation, maxRotationAngle * direction, rotationAcceleration * Time.deltaTime);
-        */
     }
 
     private void FixedUpdate()
@@ -102,6 +65,12 @@ public class KartController : MonoBehaviour
         {
             isGrounded = false;
             groundNormal = Vector3.up;
+        }
+
+        //Apply gravity if not grounded
+        if (!isGrounded)
+        {
+            sphere.AddForce(Vector3.down*gravity,ForceMode.VelocityChange);
         }
 
         sphere.AddForce(-groundedForward * forwardSpeed, ForceMode.VelocityChange);
@@ -134,33 +103,5 @@ public class KartController : MonoBehaviour
         {
             sphere.AddForce(-Physics.gravity, ForceMode.Acceleration);
         }
-        /*
-        //Apply rotation
-        Vector3 forwardDirection = Quaternion.AngleAxis(currentRotation, Vector3.up) * kartModel.transform.forward;
-
-        float rotationLerpSpeed = 0.1f;
-        //Apply speed
-        Vector3 newVelocity = Vector3.Lerp(kartModel.transform.forward * currentSpeed, forwardDirection * currentSpeed, rotationLerpSpeed);
-        newVelocity.y = sphere.linearVelocity.y;
-        sphere.linearVelocity = newVelocity;
-
-        if (sphere.linearVelocity.magnitude > 0.1f)
-        {
-            kartModel.transform.eulerAngles = Quaternion.LookRotation(sphere.linearVelocity.normalized).eulerAngles;
-        }
-        */
-    }
-
-    //Draw fortward d
-    void OnDrawGizmos()
-    {
-        /*
-        Gizmos.color = Color.green;
-        Vector3 origin = kartModel.transform.position;
-
-        Vector3 forwardDirection = Quaternion.AngleAxis(currentRotation, Vector3.up) * kartModel.transform.forward;
-        // Draw angle arms
-        Gizmos.DrawLine(origin, origin + forwardDirection * 10);
-        */
     }
 }

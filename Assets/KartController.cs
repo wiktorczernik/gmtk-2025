@@ -40,21 +40,29 @@ public class KartController : MonoBehaviour
     [Header("Other")]
     [SerializeField] private float gravity;
     [SerializeField] private float jumpForce;
+    [SerializeField] private bool isDrifting;
 
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            sphere.AddForce(Vector3.up * jumpForce,ForceMode.VelocityChange);
+            sphere.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
         }
+
+        isDrifting = (Input.GetKey(KeyCode.LeftShift) && isGrounded);
+
+        //Align kart to ground
+        kartModel.transform.position = transform.position - new Vector3(0, kartModelYModifier);
+        kartModel.transform.rotation = Quaternion.Lerp(kartModel.transform.rotation, Quaternion.FromToRotation(kartModel.transform.up, groundNormal) * kartModel.transform.rotation, 0.1f);
+        kartModel.transform.localEulerAngles = new Vector3(kartModel.transform.localEulerAngles.x, 0, kartModel.transform.localEulerAngles.z);
     }
 
     private void FixedUpdate()
     {
         float forwardSpeed = groundedForwardSpeed;
         RaycastHit hitInfo;
-
+        Debug.Log(isGrounded);
         bool hit = Physics.SphereCast(sphere.position, groundCheckRadius, Vector3.down, out hitInfo, groundMaxDistance);
         if (hit)
         {

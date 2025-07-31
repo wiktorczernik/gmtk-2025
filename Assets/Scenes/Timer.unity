@@ -710,6 +710,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a402558dc41f96478f9b004a6db84c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2050332884 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 484600057010405159, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
+  m_PrefabInstance: {fileID: 6148331206582149155}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050332878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d94673f9fe56dab4692b0ce394323e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2142846494
 GameObject:
   m_ObjectHideFlags: 0
@@ -877,39 +888,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2010091787129223645, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
       propertyPath: _defaultActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2010091787129223645, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
       propertyPath: _timeEnd.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2010091787129223645, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
-      propertyPath: _unityEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2010091787129223645, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
       propertyPath: _timeEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2010091787129223645, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
       propertyPath: _timeEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 11500000, guid: cbebc59dd4f25ba4ba26346cd27546c9, type: 3}
-    - target: {fileID: 2010091787129223645, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
-      propertyPath: _timeEnd.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 11500000, guid: cbebc59dd4f25ba4ba26346cd27546c9, type: 3}
+      objectReference: {fileID: 2050332884}
     - target: {fileID: 2010091787129223645, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
       propertyPath: _timeEnd.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2010091787129223645, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
-      propertyPath: _timeEnd.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
+      propertyPath: _timeEnd.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReturnToMenu
       objectReference: {fileID: 0}
     - target: {fileID: 2010091787129223645, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
-      propertyPath: _unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
+      propertyPath: _timeEnd.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2010091787129223645, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
+      propertyPath: _timeEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5406001750816765690, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
       propertyPath: m_Name

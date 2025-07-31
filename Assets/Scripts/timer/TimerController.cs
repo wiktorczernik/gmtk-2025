@@ -37,17 +37,6 @@ public class TimerController : MonoBehaviour
             main._time = value;
         }
     }
-    public TextMeshProUGUI timerText
-    {
-        get
-        {
-            return _timerText;
-        }
-        set
-        {
-            _timerText = value;
-        }
-    }
     public static bool active
     {
         get
@@ -62,14 +51,14 @@ public class TimerController : MonoBehaviour
     #endregion
     static TimerController main;
 
-
     private void Awake()
     {
         main = this;
     }
+    
     void Start()
     {
-        if (timerText == null || _timerUI == null)
+        if (_timerText == null || _timerUI == null)
         {
             Debug.LogWarning("Objects was not setup!");
             return;
@@ -77,7 +66,7 @@ public class TimerController : MonoBehaviour
 
         _timerUI.SetActive(_defaultActive);
         time = _defaultTime;
-        timerText.text = time + ".00";
+        _timerText.text = time + ".00";
     }
 
     void Update()
@@ -85,7 +74,7 @@ public class TimerController : MonoBehaviour
         if (time >= 0 && active)
         {
             time -= Time.deltaTime;
-            timerText.text = string.Format("{0:0.00}", time).Replace(',', '.');
+            _timerText.text = string.Format("{0:0.00}", time).Replace(',', '.');
         }
 
         if (time <= 0 && active)

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3135925599157657947}
-  - component: {fileID: 2809345503587299636}
   - component: {fileID: 6625359261001490809}
   m_Layer: 0
   m_Name: Collider
@@ -28,38 +27,11 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 300, y: 300, z: 300}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2122842426027376111}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &2809345503587299636
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1666422241899450912}
-  serializedVersion: 4
-  m_Mass: 300
-  m_Drag: 2
-  m_AngularDrag: 2
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
 --- !u!135 &6625359261001490809
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -79,7 +51,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.004
+  m_Radius: 1.2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1908050474335374610
 GameObject:
@@ -91,6 +63,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2122842426027376111}
   - component: {fileID: 2397503989425869322}
+  - component: {fileID: 8340581155720886841}
   m_Layer: 0
   m_Name: Kart
   m_TagString: Untagged
@@ -127,20 +100,97 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3afcc21f7f83d4b459b406bdd3f562fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sphere: {fileID: 2809345503587299636}
+  speedToSteeringCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.12828021
+      outSlope: 0.12828021
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 5.5141363
+      value: 0.70735455
+      inSlope: 0.03821888
+      outSlope: 0.03821888
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.07525567
+    - serializedVersion: 3
+      time: 29.589367
+      value: 0.96199894
+      inSlope: 0.004606446
+      outSlope: 0.004606446
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08201078
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 40
+      value: 1
+      inSlope: 0.0036502162
+      outSlope: 0.0036502162
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  steeringAngleSpeed: 100
+  steeringLerp: 2
+  groundMaxDistance: 1.2
+  groundCheckRadius: 1.2
+  steeringCurrentRot: {x: 0, y: 0, z: 0, w: 0}
+  steeringTargetRot: {x: 0, y: 0, z: 0, w: 0}
+  groundNormal: {x: 0, y: 0, z: 0}
+  isGrounded: 1
+  sphere: {fileID: 8340581155720886841}
   kartModel: {fileID: 3946966414167040056}
   kartModelYModifier: 0.25
   maxSpeed: 40
-  maxReverseSpeed: 20
+  maxReverseSpeed: -20
   currentSpeed: 0
-  deceleration: 20
+  deceleration: -50
   groundforce: 15
-  acceleration: 25
+  acceleration: 65
   maxRotationAngle: 15
   currentRotation: 0
   rotationAcceleration: 15
   direction: 0
   gravity: 10
+--- !u!54 &8340581155720886841
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908050474335374610}
+  serializedVersion: 4
+  m_Mass: 300
+  m_Drag: 1
+  m_AngularDrag: 2
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!1 &3946966414167040056
 GameObject:
   m_ObjectHideFlags: 0

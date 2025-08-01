@@ -77,7 +77,7 @@ public class KartController : MonoBehaviour
         kartModel.transform.rotation = Quaternion.Lerp(kartModel.transform.rotation, Quaternion.FromToRotation(kartModel.transform.up, groundNormal) * kartModel.transform.rotation, 0.1f);
         kartModel.transform.localEulerAngles = new Vector3(kartModel.transform.localEulerAngles.x, 0, kartModel.transform.localEulerAngles.z);
 
-        driftAngle = Mathf.Lerp(driftAngle, targetDriftAngle * driftDir, driftAngleLerp*Time.deltaTime);
+        driftAngle = Mathf.Lerp(driftAngle, targetDriftAngle * driftDir, driftAngleLerp * Time.deltaTime);
         kartModel.transform.eulerAngles += new Vector3(0, driftAngle, 0);
 
         if (isDrifting)
@@ -95,7 +95,7 @@ public class KartController : MonoBehaviour
         float forwardSpeed = groundedForwardSpeed;
         RaycastHit hitInfo;
         Debug.Log(isGrounded);
-        bool hit = Physics.SphereCast(sphere.position+new Vector3(0,0.1f), groundCheckRadius, Vector3.down, out hitInfo, groundMaxDistance);
+        bool hit = Physics.SphereCast(sphere.position + new Vector3(0, 0.1f), groundCheckRadius, Vector3.down, out hitInfo, groundMaxDistance);
         if (hit)
         {
             isGrounded = true;
@@ -110,7 +110,7 @@ public class KartController : MonoBehaviour
         //Apply gravity if not grounded
         if (!isGrounded)
         {
-            sphere.AddForce(Vector3.down*gravity,ForceMode.VelocityChange);
+            sphere.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
         }
 
         sphere.AddForce(-groundedForward * forwardSpeed, ForceMode.VelocityChange);
@@ -147,6 +147,15 @@ public class KartController : MonoBehaviour
         if (isGrounded && Vector3.Angle(Vector3.up, groundNormal) > 0.1f)
         {
             sphere.AddForce(-Physics.gravity, ForceMode.Acceleration);
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            sphere.linearVelocity = new Vector3(0, 0, 0);
+            sphere.angularVelocity = new Vector3(0, 0, 0);
         }
     }
 }

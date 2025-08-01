@@ -52,6 +52,8 @@ public class KartController : MonoBehaviour, ICloneable
     [Header("Other")]
     [SerializeField] private float gravity;
     [SerializeField] private float jumpForce;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float bumpForce;
 
 
 
@@ -98,7 +100,7 @@ public class KartController : MonoBehaviour, ICloneable
     {
         float forwardSpeed = groundedForwardSpeed;
         RaycastHit hitInfo;
-        bool hit = Physics.SphereCast(sphere.position + new Vector3(0, 0.1f), groundCheckRadius, Vector3.down, out hitInfo, groundMaxDistance);
+        bool hit = Physics.SphereCast(sphere.position + new Vector3(0, 0.1f), groundCheckRadius, Vector3.down, out hitInfo, groundMaxDistance, groundLayer);
         if (hit)
         {
             isGrounded = true;
@@ -156,8 +158,17 @@ public class KartController : MonoBehaviour, ICloneable
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            sphere.linearVelocity = new Vector3(0, 0, 0);
-            sphere.angularVelocity = new Vector3(0, 0, 0);
+            //sphere.linearVelocity = new Vector3(0, 0, 0);
+            //sphere.angularVelocity = new Vector3(0, 0, 0);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Wall"))
+        {
+            Vector3 dir = Vector3.Normalize(transform.position - collision.contacts[0].point);
+            sphere.AddForce(dir * 30, ForceMode.VelocityChange);
         }
     }
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7686190635182232077}
   - component: {fileID: 1954658180579405365}
   - component: {fileID: 406710624771260091}
-  - component: {fileID: 7684584326187019627}
+  - component: {fileID: 242066147327043894}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Manager
@@ -46,8 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b4d8ad9de167eb4f9d5bc0f454f076a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allLapSettings:
+  - activeGates:
+    - {fileID: 0}
+    - {fileID: 0}
+  activeLapSettings:
+    activeGates: []
   kartClonePrefab: {fileID: 2667294251946721339, guid: fb40da7911a8afc42a5b581303457a56, type: 3}
-  lapManager: {fileID: 7684584326187019627}
+  lapManager: {fileID: 0}
 --- !u!114 &406710624771260091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6c5f2e810c4fc34aaa09dfa4c151f8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7684584326187019627
+--- !u!114 &242066147327043894
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,7 +75,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3899837147331405987}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 243732b66f9642a4f875e4b07eed9efd, type: 3}
+  m_Script: {fileID: 11500000, guid: c4e33a29d42528e4a97456962355b678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _lapText: {fileID: 0}

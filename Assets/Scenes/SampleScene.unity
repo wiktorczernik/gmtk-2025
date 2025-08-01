@@ -1486,17 +1486,6 @@ MonoBehaviour:
   m_Script: {fileID: 1419717442, guid: f56d46228aee4734f9114056c53bb57e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &765746763 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2010091787129223645, guid: eddcd64237ccb2545acfe4ffe9cba939, type: 3}
-  m_PrefabInstance: {fileID: 429631913}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a402558dc41f96478f9b004a6db84c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &778898648
 GameObject:
   m_ObjectHideFlags: 0
@@ -28482,7 +28471,7 @@ MonoBehaviour:
   deceleration: 25
   groundforce: 20
   acceleration: 30
-  maxRotationSpeed: 20
+  maxRotationSpeed: 0
   currentRotation: 0
   rotationAcceleration: 0.1
   direction: 0
@@ -28657,7 +28646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 243732b66f9642a4f875e4b07eed9efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LapsUI: {fileID: 4455481996314413132}
+  LapsUI: {fileID: 0}
   _lapText: {fileID: 6312157834368024982}
   TotalLaps: 3
 --- !u!114 &1570950704
@@ -28677,73 +28666,13 @@ MonoBehaviour:
       m_Calls: []
   OnLapCompleted:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1570950703}
-        m_TargetAssemblyTypeName: LapManager, Assembly-CSharp
-        m_MethodName: IncreaseLapCounter
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   AllLapsCompleted:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1570950703}
-        m_TargetAssemblyTypeName: LapManager, Assembly-CSharp
-        m_MethodName: TestGameWin
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 765746763}
-        m_TargetAssemblyTypeName: TimerController, Assembly-CSharp
-        m_MethodName: set_active
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnGameLoose:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1570950703}
-        m_TargetAssemblyTypeName: LapManager, Assembly-CSharp
-        m_MethodName: TestGameLost
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 765746763}
-        m_TargetAssemblyTypeName: TimerController, Assembly-CSharp
-        m_MethodName: set_active
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!4 &1570950705
 Transform:
   m_ObjectHideFlags: 0

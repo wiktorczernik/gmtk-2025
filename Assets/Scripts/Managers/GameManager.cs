@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     void OnGameStart()
     {
         kartControllerInstance = FindFirstObjectByType<KartController>();
+        kartControllerInstance.ApplyLapConfig(0);
         CloneUtils.clonePrefab = kartClonePrefab;
         CloneUtils.recordingTarget = kartControllerInstance;
 
@@ -56,5 +57,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Completion 2");
         CloneUtils.RequestStartRecording(kartControllerInstance);
         Debug.Log("Completion 3");
+        kartControllerInstance.ApplyLapConfig(LapManager.currentLap - 1);
     }
 }

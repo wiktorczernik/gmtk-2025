@@ -1,4 +1,4 @@
-public class KartClone : Clone
+    public class KartClone : Clone
 {
     public override void SetFrameState(CloneFrameState state)
     {

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     public static void TriggerLapCompletion()
     {
-
+        GameObject.FindGameObjectWithTag("Manager").GetComponent<LapManager>().IncreaseLapCounter();
     }
 
     IEnumerator Start()
@@ -18,11 +18,11 @@ public class GameManager : MonoBehaviour
         yield return null;
         onGameStart?.Invoke();
         TimerController.onEnd += OnTimeEnd;
-        TimerController.active = true;
+        //TimerController.active = true;
     }
 
     void OnTimeEnd()
     {
-
+        MenuController.ReturnToMenu();
     }
 }

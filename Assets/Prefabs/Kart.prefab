@@ -64,6 +64,7 @@ GameObject:
   - component: {fileID: 2122842426027376111}
   - component: {fileID: 2397503989425869322}
   - component: {fileID: 8340581155720886841}
+  - component: {fileID: -2777712403706699918}
   m_Layer: 0
   m_Name: Kart
   m_TagString: Player
@@ -200,6 +201,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &-2777712403706699918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908050474335374610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5779afff1d77834c8351d30672dad6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3946966414167040056
 GameObject:
   m_ObjectHideFlags: 0

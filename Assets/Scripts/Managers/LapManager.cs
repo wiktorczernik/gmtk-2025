@@ -11,7 +11,7 @@ public class LapManager : MonoBehaviour
     #endregion
 
     #region Variables
-    private int _currentLap = 0;
+    private int _currentLap = 1;
     #endregion
 
     #region Public Variables
@@ -27,11 +27,10 @@ public class LapManager : MonoBehaviour
         main = this;
     }
 
-    private void OnTriggerEnter(Collider collision)
+    // It's temporary option, because we don't have function when game starting
+    private void Start()
     {
-        if (!collision.CompareTag("Player")) return;
-
-        IncreaseLapCounter();
+        _lapText.text = $"{currentLap}th Lap";
     }
 
     [ContextMenu("Increase Lap Counter")]

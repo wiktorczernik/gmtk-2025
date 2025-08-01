@@ -1,11 +1,17 @@
+using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Hierarchy;
 using UnityEngine;
+using UnityEngine.Playables;
+using UnityEngine.UIElements;
 
 public class CloneUtils : MonoBehaviour
 {
     public const int recordingFrameRate = 60;
     public const float recordingDeltaTime = 1.0f / recordingFrameRate;
+    public const int trimFrameCount = 20; // frames to trim at start and end of recording
 
     public static ICloneable recordingTarget { get; set; } = null;
     public static RecordingState recordingState { get; private set; } = RecordingState.Not;
@@ -14,7 +20,6 @@ public class CloneUtils : MonoBehaviour
     public static readonly List<ClonePlayback> currentlyPlayed = new();
 
     static CloneUtils main;
-
 
     public static ClonePlayback PlayLooped(CloneRecording recording)
     {
@@ -25,6 +30,7 @@ public class CloneUtils : MonoBehaviour
         currentlyPlayed.Add(playback);
         return playback;
     }
+
     public static CloneRecording RequestStartRecording(ICloneable cloneable)
     {
         if (recordingState != RecordingState.Not) return null;
@@ -34,6 +40,7 @@ public class CloneUtils : MonoBehaviour
 
         return currentlyRecorded;
     }
+
     public static CloneRecording RequestStopRecording()
     {
         if (recordingState != RecordingState.Recording) return null;
@@ -48,49 +55,88 @@ public class CloneUtils : MonoBehaviour
         if (recordingState == RecordingState.AwaitsStart)
         {
             recordingState = RecordingState.Recording;
-            currentlyRecorded.duration -= recordingDeltaTime;
+            currentlyRecorded.duration = 0f;
             var frameState = recordingTarget.GetFrameState();
             currentlyRecorded.frames.Add(frameState);
         }
         else if (recordingState == RecordingState.AwaitsEnd)
         {
-            var frameState = recordingTarget.GetFrameState();
-            currentlyRecorded.frames.Add(frameState);
-            currentlyRecorded.duration += Time.fixedDeltaTime;
+            var finalState = recordingTarget.GetFrameState();
+            currentlyRecorded.frames.Add(finalState);
+            currentlyRecorded.duration += recordingDeltaTime;
+
+            int total = currentlyRecorded.frames.Count;
+            int trim = Mathf.Min(trimFrameCount, total / 2 - 1);
+            var core = currentlyRecorded.frames.Skip(trim).Take(total - 2 * trim).ToList();
+
+            float coreDuration = (core.Count - 1) * recordingDeltaTime;
+            currentlyRecorded.duration = coreDuration;
+
+            int segCount = Mathf.Min(core.Count - 1, 15);
+            float minSpeedEnd = float.MaxValue;
+            float minSpeedStart = float.MaxValue;
+            for (int i = core.Count - segCount + 1; i < core.Count; i++)
+            {
+                float dist = Vector3.Distance(core[i - 1].position, core[i].position);
+                minSpeedEnd = Mathf.Min(minSpeedEnd, dist / recordingDeltaTime);
+            }
+            for (int i = 1; i <= segCount; i++)
+            {
+                float dist = Vector3.Distance(core[i - 1].position, core[i].position);
+                minSpeedStart = Mathf.Min(minSpeedStart, dist / recordingDeltaTime);
+            }
+            if (minSpeedEnd <= 0f) minSpeedEnd = minSpeedStart;
+            if (minSpeedStart <= 0f) minSpeedStart = minSpeedEnd;
+
+            var startFrame = core.First();
+            var endFrame = core.Last();
+            float closingDist = Vector3.Distance(endFrame.position, startFrame.position);
+            float T = closingDist * 2f / (minSpeedEnd + minSpeedStart);
+            int closeFrames = Mathf.CeilToInt(T * recordingFrameRate);
+            float dt = recordingDeltaTime;
+
+            var finalFrames = new List<CloneFrameState>(core);
+            for (int i = 1; i <= closeFrames; i++)
+            {
+                float t = i * dt;
+                float s = minSpeedEnd * t + 0.5f * (minSpeedStart - minSpeedEnd) * (t * t / T);
+                float alpha = Mathf.Clamp01(s / closingDist);
+
+                Vector3 pos = Vector3.Lerp(endFrame.position, startFrame.position, alpha);
+                Quaternion rot = Quaternion.Slerp(endFrame.rotation, startFrame.rotation, alpha);
+                finalFrames.Add(new CloneFrameState { position = pos, rotation = rot });
+            }
+
+            currentlyRecorded.frames = finalFrames;
+            currentlyRecorded.duration = (finalFrames.Count - 1) * recordingDeltaTime;
             recordingState = RecordingState.Not;
         }
         else if (recordingState == RecordingState.Recording)
         {
-            var frameState = recordingTarget.GetFrameState();
-            currentlyRecorded.frames.Add(frameState);
-            currentlyRecorded.duration += Time.fixedDeltaTime;
+            var state = recordingTarget.GetFrameState();
+            currentlyRecorded.frames.Add(state);
+            currentlyRecorded.duration += recordingDeltaTime;
         }
 
-        foreach(var playback in currentlyPlayed)
+        foreach (var pb in currentlyPlayed)
         {
-            Clone clone = playback.cloneInstance;
-            List<CloneFrameState> frames = playback.recording.frames;
-            int framesCount = frames.Count;
+            var clone = pb.cloneInstance;
+            var frames = pb.recording.frames;
+            int count = frames.Count;
 
-            playback.timePlayed += Time.fixedDeltaTime;
-            float frameLerp = playback.timePlayed / recordingDeltaTime;
-            int startFrameIndex = (int)frameLerp;
-            frameLerp -= startFrameIndex;
-            startFrameIndex %= framesCount;
-            int endFrameIndex;
+            pb.timePlayed += recordingDeltaTime;
+            float lerpT = pb.timePlayed / recordingDeltaTime;
+            int idx = (int)lerpT;
+            float frac = lerpT - idx;
+            idx %= count;
+            int next = (idx == count - 1) ? 0 : idx + 1;
 
-            if (startFrameIndex == framesCount - 1)
-                endFrameIndex = 0;
-            else
-                endFrameIndex = startFrameIndex + 1;
-
-            CloneFrameState startFrame = frames[startFrameIndex];
-            CloneFrameState endFrame = frames[endFrameIndex];
-
-            CloneFrameState interpolatedFrame = startFrame;
-            interpolatedFrame.position = Vector3.Lerp(startFrame.position, endFrame.position, frameLerp);
-            interpolatedFrame.rotation = Quaternion.Lerp(startFrame.rotation, endFrame.rotation, frameLerp);
-            clone.SetFrameState(interpolatedFrame);
+            var a = frames[idx];
+            var b = frames[next];
+            var outFrame = a;
+            outFrame.position = Vector3.Lerp(a.position, b.position, frac);
+            outFrame.rotation = Quaternion.Lerp(a.rotation, b.rotation, frac);
+            clone.SetFrameState(outFrame);
         }
     }
 
@@ -98,18 +144,8 @@ public class CloneUtils : MonoBehaviour
     {
         main = this;
         QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 60;
-    }
-    private void LateUpdate()
-    {
-        
+        Application.targetFrameRate = recordingFrameRate;
     }
 
-    public enum RecordingState
-    {
-        Not,
-        AwaitsStart,
-        Recording,
-        AwaitsEnd
-    }
+    public enum RecordingState { Not, AwaitsStart, Recording, AwaitsEnd }
 }

@@ -32,6 +32,7 @@ public class LapManager : MonoBehaviour
         if (!collision.CompareTag("Player")) return;
 
         IncreaseLapCounter();
+        GameManager.TriggerLapCompletion();
     }
 
     [ContextMenu("Increase Lap Counter")]

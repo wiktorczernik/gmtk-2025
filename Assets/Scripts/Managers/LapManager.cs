@@ -7,7 +7,7 @@ public class LapManager : MonoBehaviour
 
     #region Game Objects
     [Header("GameObjects")]
-    [SerializeField] TextMeshProUGUI _lapText;
+    [SerializeField] public TextMeshProUGUI _lapText;
     #endregion
 
     #region Variables
@@ -25,12 +25,6 @@ public class LapManager : MonoBehaviour
     void Awake()
     {
         main = this;
-    }
-
-    // It's temporary option, because we don't have function when game starting
-    private void Start()
-    {
-        _lapText.text = $"{currentLap}th Lap";
     }
 
     [ContextMenu("Increase Lap Counter")]

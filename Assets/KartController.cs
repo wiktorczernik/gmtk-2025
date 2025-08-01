@@ -1,8 +1,13 @@
-using UnityEditor.U2D;
+using System;
+using System.Linq;
 using UnityEngine;
+
 
 public class KartController : MonoBehaviour, ICloneable
 {
+    [Header("Lap Settings")]
+    public KartLapConfig[] lapConfigs;
+
     [Header("Collision Settings")]
     public float colliderRadius = 1.2f;
 
@@ -38,13 +43,13 @@ public class KartController : MonoBehaviour, ICloneable
     [Header("Components")]
     [SerializeField] private Rigidbody sphere;
     [SerializeField] private GameObject kartModel;
-    [Header("Speed")]
+    [Header("Speed State")]
     [SerializeField] private float maxSpeed;
+    [SerializeField] private float acceleration;
+    [SerializeField] private float deceleration;
     [SerializeField] private float maxReverseSpeed;
     [SerializeField] private float currentSpeed;
-    [SerializeField] private float deceleration;
     [SerializeField] private float groundforce;
-    [SerializeField] private float acceleration;
     [Header("Rotation")]
     [SerializeField] private float maxRotationAngle;
     [SerializeField] private float currentRotation;
@@ -172,6 +177,7 @@ public class KartController : MonoBehaviour, ICloneable
             sphere.angularVelocity = new Vector3(0, 0, 0);
         }
     }
+
     public CloneFrameState GetFrameState()
     {
         CloneFrameState newFrame = new();
@@ -181,4 +187,21 @@ public class KartController : MonoBehaviour, ICloneable
 
         return newFrame;
     }
+    public void ApplyLapConfig(int lapIndex)
+    {
+        if (lapIndex >= lapConfigs.Length)
+            lapIndex = lapConfigs.Length - 1;
+        KartLapConfig config = lapConfigs[lapIndex];
+        maxSpeed = config.maxSpeed;
+        acceleration = config.acceleration;
+        deceleration = config.deceleration;
+    }
+}
+
+[Serializable]
+public struct KartLapConfig
+{
+    public float maxSpeed;
+    public float acceleration;
+    public float deceleration;
 }

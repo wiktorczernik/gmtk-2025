@@ -100,6 +100,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3afcc21f7f83d4b459b406bdd3f562fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lapConfigs:
+  - maxSpeed: 40
+    acceleration: 65
+    deceleration: -50
+  - maxSpeed: 50
+    acceleration: 75
+    deceleration: -60
+  - maxSpeed: 60
+    acceleration: 85
+    deceleration: -70
+  colliderRadius: 1.2
   speedToSteeringCurve:
     serializedVersion: 2
     m_Curve:
@@ -158,14 +169,16 @@ MonoBehaviour:
   steeringTargetRot: {x: 0, y: 0, z: 0, w: 0}
   groundNormal: {x: 0, y: 0, z: 0}
   isGrounded: 1
+  spinAxis: {x: 0, y: 0, z: 0}
+  spinSpeed: 0
   sphere: {fileID: 8340581155720886841}
   kartModel: {fileID: 7280856591869073110}
   maxSpeed: 40
+  acceleration: 65
+  deceleration: -50
   maxReverseSpeed: -20
   currentSpeed: 0
-  deceleration: -50
   groundforce: 15
-  acceleration: 65
   maxRotationAngle: 5
   currentRotation: 0
   rotationAcceleration: 2

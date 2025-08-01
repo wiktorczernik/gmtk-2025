@@ -51,7 +51,11 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 8702938438371209302}
   cacheVersion: 131848
+<<<<<<< Updated upstream
   cacheTime: 638895889275979451
+=======
+  cacheTime: 638896625922565579
+>>>>>>> Stashed changes
   SerializableEventsDict:
   - key: event:/test
     index: 0
@@ -99,7 +103,11 @@ MonoBehaviour:
   Path: FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
+<<<<<<< Updated upstream
   lastModified: 638895889275979451
+=======
+  lastModified: 638896625922555592
+>>>>>>> Stashed changes
   FileSizes:
   - Name: Desktop
     Value: 51680
@@ -119,7 +127,11 @@ MonoBehaviour:
   Path: FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
+<<<<<<< Updated upstream
   lastModified: 638895889275979451
+=======
+  lastModified: 638896625922565579
+>>>>>>> Stashed changes
   FileSizes:
   - Name: Desktop
     Value: 814

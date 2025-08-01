@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class KartController : MonoBehaviour
+public class KartController : MonoBehaviour, ICloneable
 {
     [Header("Steering Settings")]
     public AnimationCurve speedToSteeringCurve;
@@ -157,5 +157,14 @@ public class KartController : MonoBehaviour
             sphere.linearVelocity = new Vector3(0, 0, 0);
             sphere.angularVelocity = new Vector3(0, 0, 0);
         }
+    }
+    public CloneFrameState GetFrameState()
+    {
+        CloneFrameState newFrame = new();
+
+        newFrame.position = kartModel.transform.position;
+        newFrame.rotation = kartModel.transform.rotation;
+
+        return newFrame;
     }
 }

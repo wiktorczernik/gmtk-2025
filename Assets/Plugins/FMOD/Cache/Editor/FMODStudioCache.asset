@@ -56,6 +56,7 @@ MonoBehaviour:
 =======
   cacheTime: 638896625922565579
 >>>>>>> Stashed changes
+  cacheTime: 638896350006711005
   SerializableEventsDict:
   - key: event:/test
     index: 0
@@ -103,6 +104,7 @@ MonoBehaviour:
   Path: FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
+  lastModified: 638896350006711005
 <<<<<<< Updated upstream
   lastModified: 638895889275979451
 =======
@@ -127,6 +129,7 @@ MonoBehaviour:
   Path: FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
+  lastModified: 638896350006711005
 <<<<<<< Updated upstream
   lastModified: 638895889275979451
 =======

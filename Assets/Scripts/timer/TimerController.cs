@@ -1,5 +1,7 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TimerController : MonoBehaviour
 {
@@ -12,73 +14,74 @@ public class TimerController : MonoBehaviour
     #region Fields
     [Header("Fields")]
     [SerializeField] private double _defaultTime = 30;
-    [SerializeField] private bool _defaultActive = true;
+    [SerializeField] private bool _defaultActive = false;
     #endregion
+
+    public static event Action onEnd;
 
     #region Variables
     [Header("Variables")]
     [SerializeField] private double _time;
+    [SerializeField] private bool _active;
     #endregion
 
     #region Public Variables
-    public double time
+    public static double time
     {
         get
         {
-            return _time;
+            return main._time;
         }
         set
         {
-            _time = value;
+            main._time = value;
         }
     }
-    public TextMeshProUGUI timerText
+    public static bool active
     {
         get
         {
-            return _timerText;
+            return main._active;
         }
         set
         {
-            _timerText = value;
-        }
-    }
-    public bool defaultActive
-    {
-        get
-        {
-            return _defaultActive;
-        }
-        set
-        {
-            _defaultActive = value;
+            main._active = value;
         }
     }
     #endregion
+    static TimerController main;
 
+    private void Awake()
+    {
+        main = this;
+    }
+    
     void Start()
     {
-        if (timerText == null || _timerUI == null)
+        if (_timerText == null || _timerUI == null)
         {
             Debug.LogWarning("Objects was not setup!");
             return;
         }
 
-        _timerUI.SetActive(defaultActive);
-
-        if (defaultActive)
-        {
-            time = _defaultTime;
-            timerText.text = time + ".00";
-        }
+        _timerUI.SetActive(_defaultActive);
+        time = _defaultTime;
+        _timerText.text = time + ".00";
     }
 
     void Update()
     {
-        if (time >= 0)
+        if (time >= 0 && active)
         {
             time -= Time.deltaTime;
-            timerText.text = string.Format("{0:0.00}", time).Replace(',', '.');
+            _timerText.text = string.Format("{0:0.00}", time).Replace(',', '.');
+        }
+
+        if (time <= 0 && active)
+        {
+            active = false;
+            onEnd.Invoke();
+            _timerUI.SetActive(false);
         }
     }
 }

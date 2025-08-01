@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7283138686362530960}
-  - component: {fileID: 1940800814137217682}
   - component: {fileID: 9044308490052129732}
   - component: {fileID: 6249744845920214048}
   - component: {fileID: 5058317353503796900}
+  - component: {fileID: 8638282103218039760}
   m_Layer: 0
   m_Name: Lap Counter
   m_TagString: Untagged
@@ -28,25 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4151694738381937544}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 102.27824, y: -2.72, z: -65.72}
-  m_LocalScale: {x: 1, y: 1, z: 25.357058}
+  m_LocalRotation: {x: 0.035949413, y: 0.70431584, z: -0.039584447, w: 0.70787007}
+  m_LocalPosition: {x: 66.1, y: 7.1, z: -91.2}
+  m_LocalScale: {x: 1, y: 1, z: 32.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1940800814137217682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4151694738381937544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c9e08fb3700bb04887d0c32ed5c43b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_LocalEulerAnglesHint: {x: 6.123, y: 89.695, z: -0.311}
 --- !u!33 &9044308490052129732
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -119,5 +107,17 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 18, z: 1}
+  m_Size: {x: 1, y: 50.14, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8638282103218039760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4151694738381937544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd28ed8e65f9ca545aca351a488c1af6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -119,6 +119,45 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &42095405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6422172603193830026, guid: e994f740d2fcc244fbbaa1d73a8a6447, type: 3}
+  m_PrefabInstance: {fileID: 5207032161331771173}
+  m_PrefabAsset: {fileID: 0}
+--- !u!328 &42095406
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42095405}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 32900000, guid: 64ab762953d77d9419d1b37e1d363a73, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_TimeUpdateMode: 2
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources: []
+  m_DirectAudioVolumes: []
+  m_Url: 
+  m_EnabledAudioTracks: 
+  m_DirectAudioMutes: 
+  m_ControlledAudioTrackCount: 0
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 1
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1 &581122278
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,6 +538,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2921827196733393486, guid: e994f740d2fcc244fbbaa1d73a8a6447, type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3979876284122106397, guid: e994f740d2fcc244fbbaa1d73a8a6447, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6422172603193830026, guid: e994f740d2fcc244fbbaa1d73a8a6447, type: 3}
       propertyPath: m_Name
       value: Menu
@@ -506,7 +553,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6422172603193830026, guid: e994f740d2fcc244fbbaa1d73a8a6447, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 42095406}
   m_SourcePrefab: {fileID: 100100000, guid: e994f740d2fcc244fbbaa1d73a8a6447, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

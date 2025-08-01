@@ -1,15 +1,10 @@
 using System;
-using System.Linq;
 using UnityEngine;
-
 
 public class KartController : MonoBehaviour, ICloneable
 {
     [Header("Lap Settings")]
     public KartLapConfig[] lapConfigs;
-
-    [Header("Collision Settings")]
-    public float colliderRadius = 1.2f;
 
     [Header("Steering Settings")]
     public AnimationCurve speedToSteeringCurve;
@@ -37,19 +32,18 @@ public class KartController : MonoBehaviour, ICloneable
     public Vector3 groundedForward => Vector3.ProjectOnPlane(worldForward, groundNormal);
     public Vector3 groundNormal = Vector3.up;
     public bool isGrounded = true;
-    public Vector3 spinAxis = Vector3.zero;
-    public float spinSpeed = 0f;
 
     [Header("Components")]
     [SerializeField] private Rigidbody sphere;
     [SerializeField] private GameObject kartModel;
-    [Header("Speed State")]
+    [SerializeField] private float kartModelYModifier;
+    [Header("Speed")]
     [SerializeField] private float maxSpeed;
-    [SerializeField] private float acceleration;
-    [SerializeField] private float deceleration;
     [SerializeField] private float maxReverseSpeed;
     [SerializeField] private float currentSpeed;
+    [SerializeField] private float deceleration;
     [SerializeField] private float groundforce;
+    [SerializeField] private float acceleration;
     [Header("Rotation")]
     [SerializeField] private float maxRotationAngle;
     [SerializeField] private float currentRotation;
@@ -83,7 +77,12 @@ public class KartController : MonoBehaviour, ICloneable
         }
 
         //Align kart to ground
+        kartModel.transform.position = transform.position - new Vector3(0, kartModelYModifier);
+        kartModel.transform.rotation = Quaternion.Lerp(kartModel.transform.rotation, Quaternion.FromToRotation(kartModel.transform.up, groundNormal) * kartModel.transform.rotation, 0.1f);
+        kartModel.transform.localEulerAngles = new Vector3(kartModel.transform.localEulerAngles.x, 0, kartModel.transform.localEulerAngles.z);
+
         driftAngle = Mathf.Lerp(driftAngle, targetDriftAngle * driftDir, driftAngleLerp * Time.deltaTime);
+        kartModel.transform.eulerAngles += new Vector3(0, driftAngle, 0);
 
         if (isDrifting)
         {
@@ -93,9 +92,6 @@ public class KartController : MonoBehaviour, ICloneable
         {
             steeringAngleSpeed = normalSteeringAngleSpeed;
         }
-
-        float deg = spinSpeed * Mathf.Rad2Deg * Time.deltaTime;
-        kartModel.transform.Rotate(spinAxis, deg, Space.World);
     }
 
     private void FixedUpdate()
@@ -153,19 +149,6 @@ public class KartController : MonoBehaviour, ICloneable
         if (isGrounded && Vector3.Angle(Vector3.up, groundNormal) > 0.1f)
         {
             sphere.AddForce(-Physics.gravity, ForceMode.Acceleration);
-        }
-
-        if (isGrounded)
-        {
-            Vector3 horVel = sphere.linearVelocity;
-            horVel.y = 0;
-            float horSpeed = horVel.magnitude;
-
-            if (horSpeed > 0.01f)
-            {
-                spinAxis = Vector3.Cross(Vector3.up, horVel.normalized);
-                spinSpeed = horSpeed / colliderRadius;
-            }
         }
     }
 

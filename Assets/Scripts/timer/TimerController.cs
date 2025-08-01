@@ -1,10 +1,11 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class TimerController : MonoBehaviour
 {
+    static TimerController main;
+
     #region GameObjects
     [Header("Objects")]
     [SerializeField] private GameObject _timerUI;
@@ -26,15 +27,15 @@ public class TimerController : MonoBehaviour
     #endregion
 
     #region Public Variables
-    public static double time
+    public double time
     {
         get
         {
-            return main._time;
+            return _time;
         }
         set
         {
-            main._time = value;
+            _time = value;
         }
     }
     public static bool active
@@ -49,7 +50,6 @@ public class TimerController : MonoBehaviour
         }
     }
     #endregion
-    static TimerController main;
 
     private void Awake()
     {

@@ -1122,7 +1122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nonRigidbodyVelocity: 0
-  attenuationObject: {fileID: 0}
+  attenuationObject: {fileID: 330585543}
 --- !u!114 &330585551
 MonoBehaviour:
   m_ObjectHideFlags: 0

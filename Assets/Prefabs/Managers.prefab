@@ -53,7 +53,9 @@ MonoBehaviour:
   activeLapSettings:
     activeGates: []
   kartClonePrefab: {fileID: 2667294251946721339, guid: fb40da7911a8afc42a5b581303457a56, type: 3}
-  lapManager: {fileID: 0}
+  lapManager: {fileID: 242066147327043894}
+  pauseUI: {fileID: 0}
+  gameOverUI: {fileID: 0}
 --- !u!114 &406710624771260091
 MonoBehaviour:
   m_ObjectHideFlags: 0

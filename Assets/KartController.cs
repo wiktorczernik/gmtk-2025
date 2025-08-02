@@ -118,58 +118,61 @@ public class KartController : MonoBehaviour, ICloneable
 
     private void FixedUpdate()
     {
-        float forwardSpeed = groundedForwardSpeed;
-        RaycastHit hitInfo;
-        bool hit = Physics.SphereCast(sphere.position + new Vector3(0, 0.1f), groundCheckRadius, Vector3.down, out hitInfo, groundMaxDistance, groundLayer);
-        if (hit)
+        if (CountdownController.isCountdownEnd)
         {
-            isGrounded = true;
-            groundNormal = hitInfo.normal;
-        }
-        else
-        {
-            isGrounded = false;
-            groundNormal = Vector3.up;
-        }
+            float forwardSpeed = groundedForwardSpeed;
+            RaycastHit hitInfo;
+            bool hit = Physics.SphereCast(sphere.position + new Vector3(0, 0.1f), groundCheckRadius, Vector3.down, out hitInfo, groundMaxDistance, groundLayer);
+            if (hit)
+            {
+                isGrounded = true;
+                groundNormal = hitInfo.normal;
+            }
+            else
+            {
+                isGrounded = false;
+                groundNormal = Vector3.up;
+            }
 
-        //Apply gravity if not grounded
-        if (!isGrounded)
-        {
-            sphere.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
-        }
+            //Apply gravity if not grounded
+            if (!isGrounded)
+            {
+                sphere.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
+            }
 
-        sphere.AddForce(-groundedForward * forwardSpeed, ForceMode.VelocityChange);
+            sphere.AddForce(-groundedForward * forwardSpeed, ForceMode.VelocityChange);
 
-        if (isDrifting && steeringInput != driftDir)
-        {
-            steeringInput = 0;
-        }
+            if (isDrifting && steeringInput != driftDir)
+            {
+                steeringInput = 0;
+            }
 
-        Quaternion steeringTargetRot = Quaternion.Euler(steeringInput * steeringAngleSpeed * speedToSteeringCurve.Evaluate(forwardSpeed) * groundNormal * Time.fixedDeltaTime);
-        Vector3 steeringDeltaAngles = steeringTargetRot.eulerAngles;
-        steeringDeltaAngles.x = 0;
-        steeringDeltaAngles.z = 0;
-        steeringTargetRot = Quaternion.Euler(steeringDeltaAngles);
-        steeringCurrentRot = Quaternion.Lerp(steeringCurrentRot, steeringTargetRot, steeringLerp * Time.fixedDeltaTime);
-        sphere.MoveRotation(sphere.rotation * steeringCurrentRot);
+            Quaternion steeringTargetRot = Quaternion.Euler(steeringInput * steeringAngleSpeed * speedToSteeringCurve.Evaluate(forwardSpeed) * groundNormal * Time.fixedDeltaTime);
+            Vector3 steeringDeltaAngles = steeringTargetRot.eulerAngles;
+            steeringDeltaAngles.x = 0;
+            steeringDeltaAngles.z = 0;
+            steeringTargetRot = Quaternion.Euler(steeringDeltaAngles);
+            steeringCurrentRot = Quaternion.Lerp(steeringCurrentRot, steeringTargetRot, steeringLerp * Time.fixedDeltaTime);
+            sphere.MoveRotation(sphere.rotation * steeringCurrentRot);
 
-        sphere.AddForce(groundedForward * forwardSpeed, ForceMode.VelocityChange);
+            sphere.AddForce(groundedForward * forwardSpeed, ForceMode.VelocityChange);
 
-        bool canAccelerate = groundedForwardSpeed < maxSpeed;
-        bool canDecelerate = groundedForwardSpeed > maxReverseSpeed;
+            bool canAccelerate = groundedForwardSpeed < maxSpeed;
+            bool canDecelerate = groundedForwardSpeed > maxReverseSpeed;
 
-        float force = 0;
-        if (throttleInput > 0 && canAccelerate)
-            force = acceleration;
-        else if (throttleInput < 0 && canDecelerate)
-            force = deceleration;
-        force *= Time.fixedDeltaTime;
+            float force = 0;
+            if (throttleInput > 0 && canAccelerate)
+                force = acceleration;
+            else if (throttleInput < 0 && canDecelerate)
+                force = deceleration;
+            force *= Time.fixedDeltaTime;
 
-        sphere.AddForce(groundedForward * force, ForceMode.VelocityChange);
+            sphere.AddForce(groundedForward * force, ForceMode.VelocityChange);
 
-        if (isGrounded && Vector3.Angle(Vector3.up, groundNormal) > 0.1f)
-        {
-            sphere.AddForce(-Physics.gravity, ForceMode.Acceleration);
+            if (isGrounded && Vector3.Angle(Vector3.up, groundNormal) > 0.1f)
+            {
+                sphere.AddForce(-Physics.gravity, ForceMode.Acceleration);
+            }
         }
     }
 

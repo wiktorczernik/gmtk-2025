@@ -15,7 +15,6 @@ public class TimerController : MonoBehaviour
     #region Input State
     [Header("Input State")]
     [SerializeField] private double _defaultTime = 30;
-    [SerializeField] private bool _defaultActive = false;
     #endregion
 
     public static event Action onEnd;
@@ -23,7 +22,7 @@ public class TimerController : MonoBehaviour
     #region State
     [Header("State")]
     [SerializeField] private double _time;
-    [SerializeField] private bool _active;
+    [SerializeField] private bool _active = false;
     #endregion
 
     #region Public Variables
@@ -64,9 +63,9 @@ public class TimerController : MonoBehaviour
             return;
         }
 
-        _timerUI.SetActive(_defaultActive);
+        _timerUI.SetActive(active);
         time = _defaultTime;
-        _timerText.text = time + ".00";
+        _timerText.text = string.Format("{0:0}", time);
     }
 
     void Update()

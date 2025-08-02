@@ -7,6 +7,7 @@ TagManager:
   - Wall
   - LapTrigger
   - Manager
+  - LapCheckpoint
   layers:
   - Default
   - TransparentFX

@@ -10,22 +10,41 @@ public class GameManager : MonoBehaviour
 
     public GameLapSettings[] allLapSettings = new GameLapSettings[1];
     public GameLapSettings activeLapSettings;
+
+    #region Components
+    [Header("Components")]
     public KartClone kartClonePrefab;
     public LapManager lapManager;
+    public GameObject timerUI;
+    public GameObject countdownUI;
+    public GameObject pauseUI;
+    public GameObject gameOverUI;
+    #endregion
 
     KartController kartControllerInstance;
 
     static GameManager main;
 
+    private bool _isPaused = false;
+
     private void Awake()
     {
         main = this;
     }
+
     IEnumerator Start()
     {
         yield return null;
         onGameStart?.Invoke();
         OnGameStart();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameOverUI.activeSelf)
+        {
+            OnPause();
+        }
     }
 
     public static void TriggerLapCompletion() => main.StartCoroutine(main.OnLapCompletion());
@@ -51,6 +70,9 @@ public class GameManager : MonoBehaviour
 
     void OnGameStart()
     {
+        pauseUI.SetActive(false);
+        gameOverUI.SetActive(false);
+        countdownUI.SetActive(true);
         kartControllerInstance = FindFirstObjectByType<KartController>();
         kartControllerInstance.ApplyLapConfig(0);
         CloneUtils.clonePrefab = kartClonePrefab;
@@ -59,14 +81,34 @@ public class GameManager : MonoBehaviour
 
         TimerController.onEnd += OnTimeEnd;
         lapManager._lapText.text = $"{LapManager.currentLap}st Lap";
-        TimerController.active = true;
         CloneUtils.RequestStartRecording(kartControllerInstance);
+    }
+
+    void OnPause()
+    {
+        _isPaused = !_isPaused;
+
+        if (_isPaused)
+        {
+            Time.timeScale = 0f;
+            timerUI.SetActive(false);
+            pauseUI.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            timerUI.SetActive(true);
+            pauseUI.SetActive(false);
+        }
     }
 
     void OnTimeEnd()
     {
-        MenuController.ReturnToMenu();
+        gameOverUI.SetActive(true);
+        Time.timeScale = 0f;
+        TimerController.onEnd -= OnTimeEnd;
     }
+
     IEnumerator OnLapCompletion()
     {
         lapManager.IncreaseLapCounter();

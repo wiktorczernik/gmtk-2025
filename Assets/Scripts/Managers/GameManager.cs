@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         ActivateLapSettings(lapIndex: 0, deactivatePrevious: false);
 
         TimerController.onEnd += OnTimeEnd;
-        lapManager._lapText.text = $"{LapManager.currentLap}th Lap";
+        lapManager._lapText.text = $"{LapManager.currentLap}st Lap";
         TimerController.active = true;
         CloneUtils.RequestStartRecording(kartControllerInstance);
     }

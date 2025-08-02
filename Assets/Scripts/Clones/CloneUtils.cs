@@ -18,6 +18,7 @@ public class CloneUtils : MonoBehaviour
 
     [Header("Path Settings")]
     public float pathWidth = 0.5f;
+    public float pathYoffset = -0.2f;
     public float pathAppearDuration = 1f;
     public Material pathMaterial;
 
@@ -121,7 +122,7 @@ public class CloneUtils : MonoBehaviour
             currentlyRecorded.pathLine = new GameObject().AddComponent<LineRenderer>();
             List<Vector3> positions = new();
             foreach (var frame in finalFrames)
-                positions.Add(frame.position);
+                positions.Add(frame.position + Vector3.up * pathYoffset);
             currentlyRecorded.pathLine.positionCount = positions.Count;
             currentlyRecorded.pathLine.SetPositions(positions.ToArray());
             currentlyRecorded.pathLine.loop = true;

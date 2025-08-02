@@ -69,8 +69,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathWidth: 0.5
+  pathYoffset: -0.2
   pathAppearDuration: 1
-  pathMaterial: {fileID: 2100002, guid: 9b40a93cd2e4944409023a7bc461d9a3, type: 3}
+  pathMaterial: {fileID: 2100000, guid: 1a399606b0448464f8cc79c22be54b08, type: 2}
 --- !u!114 &242066147327043894
 MonoBehaviour:
   m_ObjectHideFlags: 0

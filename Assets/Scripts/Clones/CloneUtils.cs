@@ -59,6 +59,7 @@ public class CloneUtils : MonoBehaviour
     {
         if (recordingState == RecordingState.AwaitsStart)
         {
+            if (currentlyRecorded == null) return;
             recordingState = RecordingState.Recording;
             currentlyRecorded.duration = 0f;
             var frameState = recordingTarget.GetFrameState();
@@ -66,6 +67,7 @@ public class CloneUtils : MonoBehaviour
         }
         else if (recordingState == RecordingState.AwaitsEnd)
         {
+            if (currentlyRecorded == null) return;
             var finalState = recordingTarget.GetFrameState();
             currentlyRecorded.frames.Add(finalState);
             currentlyRecorded.duration += recordingDeltaTime;
@@ -127,6 +129,7 @@ public class CloneUtils : MonoBehaviour
         }
         else if (recordingState == RecordingState.Recording)
         {
+            if (currentlyRecorded == null) return;
             var state = recordingTarget.GetFrameState();
             currentlyRecorded.frames.Add(state);
             currentlyRecorded.duration += recordingDeltaTime;
@@ -173,6 +176,15 @@ public class CloneUtils : MonoBehaviour
         main = this;
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = recordingFrameRate;
+    }
+    private void OnDestroy()
+    {
+        recordingTarget = null;
+        recordingState = RecordingState.Not;
+        clonePrefab = null;
+        currentlyRecorded = null;
+        currentlyPlayed.Clear();
+        main = null;
     }
 
     public enum RecordingState { Not, AwaitsStart, Recording, AwaitsEnd }

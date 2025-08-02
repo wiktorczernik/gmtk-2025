@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     {
         main = this;
     }
+    private void OnDestroy()
+    {
+        main = null;
+    }
     IEnumerator Start()
     {
         yield return null;

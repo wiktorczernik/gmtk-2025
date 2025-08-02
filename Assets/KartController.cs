@@ -70,55 +70,58 @@ public class KartController : MonoBehaviour, ICloneable
 
     void Update()
     {
-        if (ableToDrive)
+        if (!GameManager.isGameOver)
         {
-            steeringInput = Input.GetAxisRaw("Horizontal");
-            throttleInput = Input.GetAxisRaw("Vertical");
-            driftInput = Input.GetKey(driftKey);
-        }
-        else
-        {
-            steeringInput = 0;
-            throttleInput = 0;
-            driftInput = false;
-        }
+            if (ableToDrive)
+            {
+                steeringInput = Input.GetAxisRaw("Horizontal");
+                throttleInput = Input.GetAxisRaw("Vertical");
+                driftInput = Input.GetKey(driftKey);
+            }
+            else
+            {
+                steeringInput = 0;
+                throttleInput = 0;
+                driftInput = false;
+            }
 
 
-        if (isGrounded && driftInput && !isDrifting && Mathf.Abs(steeringInput) > float.Epsilon && throttleInput > float.Epsilon)
-        {
-            isDrifting = true;
-            driftDir = steeringInput;
-        }
+            if (isGrounded && driftInput && !isDrifting && Mathf.Abs(steeringInput) > float.Epsilon && throttleInput > float.Epsilon)
+            {
+                isDrifting = true;
+                driftDir = steeringInput;
+            }
 
-        if (!driftInput || throttleInput < float.Epsilon)
-        {
-            isDrifting = false;
-            driftDir = 0;
-        }
+            if (!driftInput || throttleInput < float.Epsilon)
+            {
+                isDrifting = false;
+                driftDir = 0;
+            }
 
-        //Align kart to ground
-        kartModel.transform.position = transform.position - new Vector3(0, kartModelYModifier);
-        kartModel.transform.rotation = Quaternion.Lerp(kartModel.transform.rotation, Quaternion.FromToRotation(kartModel.transform.up, groundNormal) * kartModel.transform.rotation, 0.1f);
-        kartModel.transform.localEulerAngles = new Vector3(kartModel.transform.localEulerAngles.x, 0, kartModel.transform.localEulerAngles.z);
+            //Align kart to ground
+            kartModel.transform.position = transform.position - new Vector3(0, kartModelYModifier);
+            kartModel.transform.rotation = Quaternion.Lerp(kartModel.transform.rotation, Quaternion.FromToRotation(kartModel.transform.up, groundNormal) * kartModel.transform.rotation, 0.1f);
+            kartModel.transform.localEulerAngles = new Vector3(kartModel.transform.localEulerAngles.x, 0, kartModel.transform.localEulerAngles.z);
 
-        float targetAngle = isDrifting ? targetDriftAngle : targetSteerAngle;
-        float targetDir = isDrifting ? driftDir : steeringInput;
-        modelYawTilt = Mathf.Lerp(modelYawTilt, targetAngle * targetDir, yawTiltLerp * Time.deltaTime);
-        kartModel.transform.eulerAngles += new Vector3(0, modelYawTilt, 0);
+            float targetAngle = isDrifting ? targetDriftAngle : targetSteerAngle;
+            float targetDir = isDrifting ? driftDir : steeringInput;
+            modelYawTilt = Mathf.Lerp(modelYawTilt, targetAngle * targetDir, yawTiltLerp * Time.deltaTime);
+            kartModel.transform.eulerAngles += new Vector3(0, modelYawTilt, 0);
 
-        if (isDrifting)
-        {
-            steeringAngleSpeed = driftSteeringAngleSpeed;
-        }
-        else
-        {
-            steeringAngleSpeed = normalSteeringAngleSpeed;
+            if (isDrifting)
+            {
+                steeringAngleSpeed = driftSteeringAngleSpeed;
+            }
+            else
+            {
+                steeringAngleSpeed = normalSteeringAngleSpeed;
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        if (CountdownController.isCountdownEnd)
+        if (CountdownController.isCountdownEnd && !GameManager.isGameOver)
         {
             float forwardSpeed = groundedForwardSpeed;
             RaycastHit hitInfo;

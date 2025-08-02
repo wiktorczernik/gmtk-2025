@@ -53,6 +53,7 @@ public class CountdownController : MonoBehaviour
     IEnumerator GameStart()
     {
         yield return null;
+        CloneUtils.RequestStartRecording(GameManager.kartControllerInstance);
         isCountdownEnd = true;
 
         yield return new WaitForSeconds(.15f);

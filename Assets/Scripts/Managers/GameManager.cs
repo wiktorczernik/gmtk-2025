@@ -21,11 +21,18 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverUI;
     #endregion
 
-    KartController kartControllerInstance;
+    KartController _kartControllerInstance;
+
+    public static KartController kartControllerInstance
+    {
+        get => main._kartControllerInstance;
+        private set => main._kartControllerInstance = value;
+    }
 
     static GameManager main;
 
     private bool _isPaused = false;
+    public static bool isGameOver = false;
 
     private void Awake()
     {
@@ -41,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !gameOverUI.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameOverUI.activeSelf && CountdownController.isCountdownEnd)
         {
             OnPause();
         }
@@ -70,6 +77,7 @@ public class GameManager : MonoBehaviour
 
     void OnGameStart()
     {
+        isGameOver = false;
         pauseUI.SetActive(false);
         gameOverUI.SetActive(false);
         countdownUI.SetActive(true);
@@ -81,7 +89,7 @@ public class GameManager : MonoBehaviour
 
         TimerController.onEnd += OnTimeEnd;
         lapManager._lapText.text = $"{LapManager.currentLap}st Lap";
-        CloneUtils.RequestStartRecording(kartControllerInstance);
+        //CloneUtils.RequestStartRecording(kartControllerInstance);
     }
 
     void OnPause()
@@ -105,7 +113,7 @@ public class GameManager : MonoBehaviour
     void OnTimeEnd()
     {
         gameOverUI.SetActive(true);
-        Time.timeScale = 0f;
+        isGameOver = true;
         TimerController.onEnd -= OnTimeEnd;
     }
 

@@ -7,11 +7,11 @@ public class LapManager : MonoBehaviour
 
     #region Game Objects
     [Header("GameObjects")]
-    [SerializeField] TextMeshProUGUI _lapText;
+    [SerializeField] public TextMeshProUGUI _lapText;
     #endregion
 
     #region Variables
-    private int _currentLap = 0;
+    private int _currentLap = 1;
     #endregion
 
     #region Public Variables
@@ -25,14 +25,6 @@ public class LapManager : MonoBehaviour
     void Awake()
     {
         main = this;
-    }
-
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (!collision.CompareTag("Player")) return;
-
-        IncreaseLapCounter();
-        GameManager.TriggerLapCompletion();
     }
 
     [ContextMenu("Increase Lap Counter")]

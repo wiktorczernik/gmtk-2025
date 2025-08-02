@@ -64,6 +64,7 @@ GameObject:
   - component: {fileID: 2122842426027376111}
   - component: {fileID: 2397503989425869322}
   - component: {fileID: 8340581155720886841}
+  - component: {fileID: -2777712403706699918}
   m_Layer: 0
   m_Name: Kart
   m_TagString: Player

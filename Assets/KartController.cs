@@ -94,7 +94,6 @@ public class KartController : MonoBehaviour, ICloneable
     {
         float forwardSpeed = groundedForwardSpeed;
         RaycastHit hitInfo;
-        Debug.Log(isGrounded);
         bool hit = Physics.SphereCast(sphere.position + new Vector3(0, 0.1f), groundCheckRadius, Vector3.down, out hitInfo, groundMaxDistance);
         if (hit)
         {
@@ -141,7 +140,6 @@ public class KartController : MonoBehaviour, ICloneable
             force = deceleration;
         force *= Time.fixedDeltaTime;
 
-        Debug.Log($"Normal: {groundNormal}; Forward: {groundedForward}; VInput: {verticalInput};");
         sphere.AddForce(groundedForward * force, ForceMode.VelocityChange);
 
         if (isGrounded && Vector3.Angle(Vector3.up, groundNormal) > 0.1f)

@@ -8,13 +8,13 @@ public class GameManager : MonoBehaviour
     public static event Action onGameStart; //* Called When Game Starts
     public static event Action onLapCompleted; //* Called After Finishing One Lap, Check -> PlayerCollisionTrigger.cs
     public static event Action onGameEnd; //* Called When Game Is Lost -> For Now By Timer
-
+    
     public KartClone kartClonePrefab;
+    public LapManager lapManager;
 
     KartController kartControllerInstance;
 
     static GameManager main;
-
 
     private void Awake()
     {
@@ -36,17 +36,18 @@ public class GameManager : MonoBehaviour
         CloneUtils.recordingTarget = kartControllerInstance;
 
         TimerController.onEnd += OnTimeEnd;
+        lapManager._lapText.text = $"{LapManager.currentLap}th Lap";
         TimerController.active = true;
-
         CloneUtils.RequestStartRecording(kartControllerInstance);
     }
 
     void OnTimeEnd()
     {
-
+        MenuController.ReturnToMenu();
     }
     IEnumerator OnLapCompletion()
     {
+        lapManager.IncreaseLapCounter();
         Debug.Log("Completion 0");
         CloneRecording recording = CloneUtils.RequestStopRecording();
         CloneUtils.PlayLooped(recording);

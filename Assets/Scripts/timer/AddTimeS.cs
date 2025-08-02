@@ -20,6 +20,7 @@ public class AddTimeS : MonoBehaviour
     {
         _timerObject.GetComponent<TimerController>().time += _time;
         _timerObjectCopy = Instantiate(_timerObject);
+        _timerObjectCopy.tag = "TimeAdder";
         GameObject _timerObjectChild = _timerObjectCopy.transform.GetChild(0).gameObject;
         GameObject _timerText = _timerObjectCopy.transform.GetChild(1).gameObject;
         Destroy(_timerObjectCopy.GetComponent<TimerController>());

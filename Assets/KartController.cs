@@ -85,6 +85,11 @@ public class KartController : MonoBehaviour, ICloneable
                 driftInput = false;
             }
 
+            if (throttleInput < 0)
+            {
+                steeringInput *= -1;
+            }
+
 
             if (isGrounded && driftInput && !isDrifting && Mathf.Abs(steeringInput) > float.Epsilon && throttleInput > float.Epsilon)
             {
@@ -156,6 +161,7 @@ public class KartController : MonoBehaviour, ICloneable
             steeringDeltaAngles.z = 0;
             steeringTargetRot = Quaternion.Euler(steeringDeltaAngles);
             steeringCurrentRot = Quaternion.Lerp(steeringCurrentRot, steeringTargetRot, steeringLerp * Time.fixedDeltaTime);
+
             sphere.MoveRotation(sphere.rotation * steeringCurrentRot);
 
             sphere.AddForce(groundedForward * forwardSpeed, ForceMode.VelocityChange);

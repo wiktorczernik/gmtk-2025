@@ -21,6 +21,9 @@ public class KartController : MonoBehaviour, ICloneable
     [SerializeField] private float targetDriftAngle = 45;
     [SerializeField] private float yawTiltLerp = 2;
 
+    [Header("Control Settings")]
+    public KeyCode driftKey = KeyCode.Space;
+
     [Header("Ground Checking Settings")]
     public float groundMaxDistance = 0.5f;
     public float groundCheckRadius = 1.2f;
@@ -71,7 +74,7 @@ public class KartController : MonoBehaviour, ICloneable
         {
             steeringInput = Input.GetAxisRaw("Horizontal");
             throttleInput = Input.GetAxisRaw("Vertical");
-            driftInput = Input.GetKey(KeyCode.Space);
+            driftInput = Input.GetKey(driftKey);
         }
         else
         {

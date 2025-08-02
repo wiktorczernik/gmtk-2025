@@ -6,13 +6,13 @@ public class AddTimeS : MonoBehaviour
 {
     private GameObject _timerObjectCopy;
 
-    #region GameObjects
-    [Header("GameObjects")]
+    #region Components
+    [Header("Components")]
     [SerializeField] private GameObject _timerObject;
     #endregion
 
-    #region Fields
-    [Header("Fields")]
+    #region Input State
+    [Header("Input State")]
     [SerializeField] private double _time;
     #endregion
 

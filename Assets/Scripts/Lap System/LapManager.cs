@@ -6,8 +6,8 @@ public class LapManager : MonoBehaviour
     static LapManager main;
     static GameObject[] checkpointGates;
 
-    #region Game Objects
-    [Header("GameObjects")]
+    #region Components
+    [Header("Components")]
     [SerializeField] public TextMeshProUGUI _lapText;
     #endregion
 

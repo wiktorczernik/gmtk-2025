@@ -15,6 +15,7 @@ public class KartController : MonoBehaviour, ICloneable
     [SerializeField] private bool isDrifting;
     [SerializeField] private float driftDir;
     [SerializeField] private float horizontalAxis;
+    [SerializeField] private float verticalAxis;
     [SerializeField] private float driftAngle;
     [SerializeField] private float targetDriftAngle;
     [SerializeField] private float driftAngleLerp;
@@ -54,17 +55,28 @@ public class KartController : MonoBehaviour, ICloneable
     [SerializeField] private float jumpForce;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float bumpForce;
+    [SerializeField] private bool ableToDrive = true;
 
 
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        /*if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             sphere.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
+        }*/
+
+        if (ableToDrive)
+        {
+            horizontalAxis = Input.GetAxisRaw("Horizontal");
+            verticalAxis = Input.GetAxisRaw("Vertical");
+        }
+        else
+        {
+            horizontalAxis = 0;
+            verticalAxis = 0;
         }
 
-        horizontalAxis = Input.GetAxisRaw("Horizontal");
 
         if (isGrounded && Input.GetKey(KeyCode.LeftShift) && !isDrifting && horizontalAxis != 0 && Input.GetKey(KeyCode.W))
         {
@@ -138,11 +150,10 @@ public class KartController : MonoBehaviour, ICloneable
         bool canAccelerate = groundedForwardSpeed < maxSpeed;
         bool canDecelerate = groundedForwardSpeed > maxReverseSpeed;
 
-        float verticalInput = Input.GetAxisRaw("Vertical");
         float force = 0;
-        if (verticalInput > 0 && canAccelerate)
+        if (verticalAxis > 0 && canAccelerate)
             force = acceleration;
-        else if (verticalInput < 0 && canDecelerate)
+        else if (verticalAxis < 0 && canDecelerate)
             force = deceleration;
         force *= Time.fixedDeltaTime;
 

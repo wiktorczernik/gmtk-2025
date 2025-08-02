@@ -50,7 +50,15 @@ public class LapManager : MonoBehaviour
         ResetCheckpoints();
 
         currentLap++;
-        _lapText.text = $"{currentLap}th Lap";
+
+        if (currentLap.ToString().EndsWith('1') && currentLap != 11)
+            _lapText.text = $"{currentLap}st Lap";
+        else if (currentLap.ToString().EndsWith('2') && currentLap != 12 || currentLap == 2)
+            _lapText.text = $"{currentLap}nd Lap";
+        else if (currentLap.ToString().EndsWith('3') && currentLap != 13 || currentLap == 3)
+            _lapText.text = $"{currentLap}rd Lap";
+        else
+            _lapText.text = $"{currentLap}th Lap";
     }
 
     private void ResetCheckpoints()

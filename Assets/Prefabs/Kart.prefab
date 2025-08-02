@@ -158,12 +158,15 @@ MonoBehaviour:
   steeringLerp: 2
   isDrifting: 0
   driftDir: 0
-  horizontalAxis: 0
-  driftAngle: 0
+  modelYawTilt: 0
+  targetSteerAngle: 15
   targetDriftAngle: 45
-  driftAngleLerp: 2
+  yawTiltLerp: 2
   groundMaxDistance: 1.2
   groundCheckRadius: 1.2
+  steeringInput: 0
+  throttleInput: 0
+  driftInput: 0
   steeringCurrentRot: {x: 0, y: 0, z: 0, w: 0}
   steeringTargetRot: {x: 0, y: 0, z: 0, w: 0}
   groundNormal: {x: 0, y: 0, z: 0}
@@ -183,6 +186,11 @@ MonoBehaviour:
   direction: 0
   gravity: 1
   jumpForce: 35
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  bumpForce: 0
+  ableToDrive: 1
 --- !u!54 &8340581155720886841
 Rigidbody:
   m_ObjectHideFlags: 0

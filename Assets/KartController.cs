@@ -1,22 +1,44 @@
+using System;
 using UnityEngine;
 
-public class KartController : MonoBehaviour
+public class KartController : MonoBehaviour, ICloneable
 {
+    [Header("Lap Settings")]
+    public KartLapConfig[] lapConfigs;
+
     [Header("Steering Settings")]
     public AnimationCurve speedToSteeringCurve;
-    public float steeringAngleSpeed = 0.2f;
+    public float steeringAngleSpeed;
+    public float normalSteeringAngleSpeed;
+    public float driftSteeringAngleSpeed;
     public float steeringLerp = 2f;
+    [SerializeField] private bool isDrifting;
+    [SerializeField] private float driftDir;
+    [SerializeField] private float modelYawTilt;
+
+    [Header("Model Settings")]
+    [SerializeField] private float targetSteerAngle = 15;
+    [SerializeField] private float targetDriftAngle = 45;
+    [SerializeField] private float yawTiltLerp = 2;
+
+    [Header("Control Settings")]
+    public KeyCode driftKey = KeyCode.Space;
 
     [Header("Ground Checking Settings")]
     public float groundMaxDistance = 0.5f;
     public float groundCheckRadius = 1.2f;
+
+    [Header("Input State")]
+    public float steeringInput = 0.0f;
+    public float throttleInput = 0.0f;
+    public bool driftInput = false;
 
     [Header("State")]
     public Quaternion steeringCurrentRot;
     public Quaternion steeringTargetRot;
     public float yaw => sphere.transform.eulerAngles.y;
     public float groundedForwardSpeed => Vector3.Dot(sphere.linearVelocity, groundedForward);
-    public Vector3 worldForward => Quaternion.Euler(0, yaw, 0) * Vector3.forward;
+    public Vector3 worldForward => Quaternion.Euler(0, kartModel.transform.eulerAngles.y, 0) * Vector3.forward;
     public Vector3 groundedForward => Vector3.ProjectOnPlane(worldForward, groundNormal);
     public Vector3 groundNormal = Vector3.up;
     public bool isGrounded = true;
@@ -39,128 +61,166 @@ public class KartController : MonoBehaviour
     [SerializeField] private float direction;
     [Header("Other")]
     [SerializeField] private float gravity;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float bumpForce;
+    [SerializeField] private bool ableToDrive = true;
+
 
 
     void Update()
     {
-        /*
-        //Set kart model position
-        kartModel.transform.position = sphere.transform.position - new Vector3(0, kartModelYModifier, 0);
-        //Acceleration
-        if (Input.GetKey(KeyCode.W))
+        if (!GameManager.isGameOver)
         {
-            currentSpeed += acceleration * Time.deltaTime;
-        }
-        else if (Input.GetKey(KeyCode.S)) //Deceleration
-        {
-            currentSpeed -= deceleration * Time.deltaTime;
-        }
-        else //No input, car returns to 0 speed
-        {
-            if (currentSpeed < 0)
+            if (ableToDrive)
             {
-                if (currentSpeed + groundforce * Time.deltaTime > 0)
-                {
-                    currentSpeed = 0;
-                }
-                else
-                {
-                    currentSpeed += groundforce * Time.deltaTime;
-                }
+                steeringInput = Input.GetAxisRaw("Horizontal");
+                throttleInput = Input.GetAxisRaw("Vertical");
+                driftInput = Input.GetKey(driftKey);
             }
-            else if (currentSpeed > 0)
+            else
             {
-                if (currentSpeed - groundforce * Time.deltaTime < 0)
-                {
-                    currentSpeed = 0;
-                }
-                else
-                {
-                    currentSpeed -= groundforce * Time.deltaTime;
-                }
+                steeringInput = 0;
+                throttleInput = 0;
+                driftInput = false;
+            }
+
+
+            if (isGrounded && driftInput && !isDrifting && Mathf.Abs(steeringInput) > float.Epsilon && throttleInput > float.Epsilon)
+            {
+                isDrifting = true;
+                driftDir = steeringInput;
+            }
+
+            if (!driftInput || throttleInput < float.Epsilon)
+            {
+                isDrifting = false;
+                driftDir = 0;
+            }
+
+            //Align kart to ground
+            kartModel.transform.position = transform.position - new Vector3(0, kartModelYModifier);
+            kartModel.transform.rotation = Quaternion.Lerp(kartModel.transform.rotation, Quaternion.FromToRotation(kartModel.transform.up, groundNormal) * kartModel.transform.rotation, 0.1f);
+            kartModel.transform.localEulerAngles = new Vector3(kartModel.transform.localEulerAngles.x, 0, kartModel.transform.localEulerAngles.z);
+
+            float targetAngle = isDrifting ? targetDriftAngle : targetSteerAngle;
+            float targetDir = isDrifting ? driftDir : steeringInput;
+            modelYawTilt = Mathf.Lerp(modelYawTilt, targetAngle * targetDir, yawTiltLerp * Time.deltaTime);
+            kartModel.transform.eulerAngles += new Vector3(0, modelYawTilt, 0);
+
+            if (isDrifting)
+            {
+                steeringAngleSpeed = driftSteeringAngleSpeed;
+            }
+            else
+            {
+                steeringAngleSpeed = normalSteeringAngleSpeed;
             }
         }
-        currentSpeed = Math.Clamp(currentSpeed, -maxReverseSpeed, maxSpeed);
-        //Handling
-        direction = Input.GetAxisRaw("Horizontal");
-        currentRotation = Mathf.Lerp(currentRotation, maxRotationAngle * direction, rotationAcceleration * Time.deltaTime);
-        */
     }
 
     private void FixedUpdate()
     {
-        float forwardSpeed = groundedForwardSpeed;
-        RaycastHit hitInfo;
-
-        bool hit = Physics.SphereCast(sphere.position, groundCheckRadius, Vector3.down, out hitInfo, groundMaxDistance);
-        if (hit)
+        if (CountdownController.isCountdownEnd && !GameManager.isGameOver)
         {
-            isGrounded = true;
-            groundNormal = hitInfo.normal;
+            float forwardSpeed = groundedForwardSpeed;
+            RaycastHit hitInfo;
+            bool hit = Physics.SphereCast(sphere.position + new Vector3(0, 0.1f), groundCheckRadius, Vector3.down, out hitInfo, groundMaxDistance, groundLayer);
+            if (hit)
+            {
+                isGrounded = true;
+                groundNormal = hitInfo.normal;
+            }
+            else
+            {
+                isGrounded = false;
+                groundNormal = Vector3.up;
+            }
+
+            //Apply gravity if not grounded
+            if (!isGrounded)
+            {
+                sphere.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
+            }
+
+            sphere.AddForce(-groundedForward * forwardSpeed, ForceMode.VelocityChange);
+
+            if (isDrifting && steeringInput != driftDir)
+            {
+                steeringInput = 0;
+            }
+
+            Quaternion steeringTargetRot = Quaternion.Euler(steeringInput * steeringAngleSpeed * speedToSteeringCurve.Evaluate(forwardSpeed) * groundNormal * Time.fixedDeltaTime);
+            Vector3 steeringDeltaAngles = steeringTargetRot.eulerAngles;
+            steeringDeltaAngles.x = 0;
+            steeringDeltaAngles.z = 0;
+            steeringTargetRot = Quaternion.Euler(steeringDeltaAngles);
+            steeringCurrentRot = Quaternion.Lerp(steeringCurrentRot, steeringTargetRot, steeringLerp * Time.fixedDeltaTime);
+            sphere.MoveRotation(sphere.rotation * steeringCurrentRot);
+
+            sphere.AddForce(groundedForward * forwardSpeed, ForceMode.VelocityChange);
+
+            bool canAccelerate = groundedForwardSpeed < maxSpeed;
+            bool canDecelerate = groundedForwardSpeed > maxReverseSpeed;
+
+            float force = 0;
+            if (throttleInput > 0 && canAccelerate)
+                force = acceleration;
+            else if (throttleInput < 0 && canDecelerate)
+                force = deceleration;
+            force *= Time.fixedDeltaTime;
+
+            sphere.AddForce(groundedForward * force, ForceMode.VelocityChange);
+
+            if (isGrounded && Vector3.Angle(Vector3.up, groundNormal) > 0.1f)
+            {
+                sphere.AddForce(-Physics.gravity, ForceMode.Acceleration);
+            }
         }
-        else
-        {
-            isGrounded = false;
-            groundNormal = Vector3.up;
-        }
-
-        sphere.AddForce(-groundedForward * forwardSpeed, ForceMode.VelocityChange);
-
-        Quaternion steeringTargetRot = Quaternion.Euler(Input.GetAxisRaw("Horizontal") * steeringAngleSpeed * speedToSteeringCurve.Evaluate(forwardSpeed) * groundNormal * Time.fixedDeltaTime);
-        Vector3 steeringDeltaAngles = steeringTargetRot.eulerAngles;
-        steeringDeltaAngles.x = 0;
-        steeringDeltaAngles.z = 0;
-        steeringTargetRot = Quaternion.Euler(steeringDeltaAngles);
-        steeringCurrentRot = Quaternion.Lerp(steeringCurrentRot, steeringTargetRot, steeringLerp * Time.fixedDeltaTime);
-        sphere.MoveRotation(sphere.rotation * steeringCurrentRot);
-
-        sphere.AddForce(groundedForward * forwardSpeed, ForceMode.VelocityChange);
-
-        bool canAccelerate = groundedForwardSpeed < maxSpeed;
-        bool canDecelerate = groundedForwardSpeed > maxReverseSpeed;
-
-        float verticalInput = Input.GetAxisRaw("Vertical");
-        float force = 0;
-        if (verticalInput > 0 && canAccelerate)
-            force = acceleration;
-        else if (verticalInput < 0 && canDecelerate)
-            force = deceleration;
-        force *= Time.fixedDeltaTime;
-
-        Debug.Log($"Normal: {groundNormal}; Forward: {groundedForward}; VInput: {verticalInput};");
-        sphere.AddForce(groundedForward * force, ForceMode.VelocityChange);
-
-        if (isGrounded && Vector3.Angle(Vector3.up, groundNormal) > 0.1f)
-        {
-            sphere.AddForce(-Physics.gravity, ForceMode.Acceleration);
-        }
-        /*
-        //Apply rotation
-        Vector3 forwardDirection = Quaternion.AngleAxis(currentRotation, Vector3.up) * kartModel.transform.forward;
-
-        float rotationLerpSpeed = 0.1f;
-        //Apply speed
-        Vector3 newVelocity = Vector3.Lerp(kartModel.transform.forward * currentSpeed, forwardDirection * currentSpeed, rotationLerpSpeed);
-        newVelocity.y = sphere.linearVelocity.y;
-        sphere.linearVelocity = newVelocity;
-
-        if (sphere.linearVelocity.magnitude > 0.1f)
-        {
-            kartModel.transform.eulerAngles = Quaternion.LookRotation(sphere.linearVelocity.normalized).eulerAngles;
-        }
-        */
     }
 
-    //Draw fortward d
-    void OnDrawGizmos()
+    private void OnCollisionStay(Collision collision)
     {
-        /*
-        Gizmos.color = Color.green;
-        Vector3 origin = kartModel.transform.position;
-
-        Vector3 forwardDirection = Quaternion.AngleAxis(currentRotation, Vector3.up) * kartModel.transform.forward;
-        // Draw angle arms
-        Gizmos.DrawLine(origin, origin + forwardDirection * 10);
-        */
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            //sphere.linearVelocity = new Vector3(0, 0, 0);
+            //sphere.angularVelocity = new Vector3(0, 0, 0);
+        }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Wall"))
+        {
+            Vector3 dir = Vector3.Normalize(transform.position - collision.contacts[0].point);
+            sphere.AddForce(dir * 30, ForceMode.VelocityChange);
+        }
+    }
+
+    public CloneFrameState GetFrameState()
+    {
+        CloneFrameState newFrame = new();
+
+        newFrame.position = kartModel.transform.position;
+        newFrame.rotation = kartModel.transform.rotation;
+
+        return newFrame;
+    }
+    public void ApplyLapConfig(int lapIndex)
+    {
+        if (lapIndex >= lapConfigs.Length)
+            lapIndex = lapConfigs.Length - 1;
+        KartLapConfig config = lapConfigs[lapIndex];
+        maxSpeed = config.maxSpeed;
+        acceleration = config.acceleration;
+        deceleration = config.deceleration;
+    }
+}
+
+[Serializable]
+public struct KartLapConfig
+{
+    public float maxSpeed;
+    public float acceleration;
+    public float deceleration;
 }

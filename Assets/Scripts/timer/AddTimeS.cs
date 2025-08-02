@@ -6,19 +6,19 @@ public class AddTimeS : MonoBehaviour
 {
     private GameObject _timerObjectCopy;
 
-    #region GameObjects
-    [Header("GameObjects")]
+    #region Components
+    [Header("Components")]
     [SerializeField] private GameObject _timerObject;
     #endregion
 
-    #region Fields
-    [Header("Fields")]
+    #region Input State
+    [Header("Input State")]
     [SerializeField] private double _time;
     #endregion
 
     public void AddTime()
     {
-        TimerController.time += _time;
+        _timerObject.GetComponent<TimerController>().time += _time;
         _timerObjectCopy = Instantiate(_timerObject);
         GameObject _timerObjectChild = _timerObjectCopy.transform.GetChild(0).gameObject;
         GameObject _timerText = _timerObjectCopy.transform.GetChild(1).gameObject;
@@ -26,7 +26,7 @@ public class AddTimeS : MonoBehaviour
         Destroy(_timerObjectChild);
 
         _timerText.transform.SetPositionAndRotation(new Vector3(_timerText.transform.position.x, 460, _timerText.transform.position.z), Quaternion.identity);
-        _timerText.GetComponent<RectTransform>().sizeDelta = new Vector2(60, 18);
+        _timerText.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 18);
         _timerText.GetComponent<TextMeshProUGUI>().text = $"+ {_time}.00";
 
         StartCoroutine(DestroyObject(_timerText.GetComponent<TextMeshProUGUI>()));

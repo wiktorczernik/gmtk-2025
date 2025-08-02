@@ -1,40 +1,40 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class TimerController : MonoBehaviour
 {
-    #region GameObjects
-    [Header("Objects")]
+    static TimerController main;
+
+    #region Components
+    [Header("Components")]
     [SerializeField] private GameObject _timerUI;
     [SerializeField] private TextMeshProUGUI _timerText;
     #endregion
 
-    #region Fields
-    [Header("Fields")]
+    #region Input State
+    [Header("Input State")]
     [SerializeField] private double _defaultTime = 30;
-    [SerializeField] private bool _defaultActive = false;
     #endregion
 
     public static event Action onEnd;
 
-    #region Variables
-    [Header("Variables")]
+    #region State
+    [Header("State")]
     [SerializeField] private double _time;
-    [SerializeField] private bool _active;
+    [SerializeField] private bool _active = false;
     #endregion
 
     #region Public Variables
-    public static double time
+    public double time
     {
         get
         {
-            return main._time;
+            return _time;
         }
         set
         {
-            main._time = value;
+            _time = value;
         }
     }
     public static bool active
@@ -49,7 +49,6 @@ public class TimerController : MonoBehaviour
         }
     }
     #endregion
-    static TimerController main;
 
     private void Awake()
     {
@@ -64,9 +63,9 @@ public class TimerController : MonoBehaviour
             return;
         }
 
-        _timerUI.SetActive(_defaultActive);
+        _timerUI.SetActive(active);
         time = _defaultTime;
-        _timerText.text = time + ".00";
+        _timerText.text = string.Format("{0:0}", time);
     }
 
     void Update()

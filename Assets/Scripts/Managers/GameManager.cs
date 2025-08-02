@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     static GameManager main;
 
-    private bool _isPaused = false;
+    public static bool isPaused = false;
     public static bool isGameOver = false;
 
     private void Awake()
@@ -94,16 +94,18 @@ public class GameManager : MonoBehaviour
 
         TimerController.onEnd += OnTimeEnd;
         lapManager._lapText.text = $"{LapManager.currentLap}st Lap";
-        //CloneUtils.RequestStartRecording(kartControllerInstance);
     }
 
     void OnPause()
     {
-        _isPaused = !_isPaused;
+        isPaused = !isPaused;
 
-        if (_isPaused)
+        if (isPaused)
         {
             Time.timeScale = 0f;
+
+            if (GameObject.FindGameObjectWithTag("TimeAdder"))
+                GameObject.FindGameObjectWithTag("TimeAdder").transform.GetChild(0).gameObject.SetActive(false);
             timerUI.SetActive(false);
             pauseUI.SetActive(true);
         }
@@ -111,6 +113,8 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 1f;
             timerUI.SetActive(true);
+            if (GameObject.FindGameObjectWithTag("TimeAdder"))
+                GameObject.FindGameObjectWithTag("TimeAdder").transform.GetChild(0).gameObject.SetActive(true);
             pauseUI.SetActive(false);
         }
     }

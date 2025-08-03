@@ -76,6 +76,11 @@ public class TimerController : MonoBehaviour
             _timerText.text = string.Format("{0:0.00}", time).Replace(',', '.');
         }
 
+        if (time == 5 && active)
+        {
+            FMODUnity.RuntimeManager.PlayOneShot("{6a5e58ed-0c01-469f-a73b-d314dfc44b5e}");
+        }
+
         if (time <= 0 && active)
         {
             active = false;

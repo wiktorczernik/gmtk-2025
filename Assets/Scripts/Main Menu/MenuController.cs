@@ -6,6 +6,7 @@ public class MenuController : MonoBehaviour
     public void Play()
     {
         SceneManager.LoadScene(1, LoadSceneMode.Single);
+        FMODUnity.RuntimeManager.PlayOneShot("{670ed1ed-53de-4996-ad9c-75acb773b066}");
     }
 
     public void ReturnToMenu()

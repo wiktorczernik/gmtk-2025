@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4853260076636548614
+--- !u!114 &-5457721098903590812
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/test
+  m_Name: event:/kart/kartImpact
   m_EditorClassIdentifier: 
-  Path: event:/test
+  Path: event:/kart/kartImpact
   Guid:
-    Data1: 157654516
-    Data2: 1154127253
-    Data3: 2121597360
-    Data4: -856395918
+    Data1: -2022939714
+    Data2: 1154326695
+    Data3: 1698090406
+    Data4: 587041494
   Banks:
   - {fileID: -1291050517952813701}
   IsStream: 0
@@ -27,6 +27,166 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-4985506042607054145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/kart/drift
+  m_EditorClassIdentifier: 
+  Path: event:/kart/drift
+  Guid:
+    Data1: 1705305269
+    Data2: 1285158685
+    Data3: 2056090250
+    Data4: -2058009744
+  Banks:
+  - {fileID: -1291050517952813701}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-3897903547921142961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/main/time
+  m_EditorClassIdentifier: 
+  Name: time
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 1260481232
+    data2: 298555184
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &-3771555657841509139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/kart/kartDestroyed
+  m_EditorClassIdentifier: 
+  Path: event:/kart/kartDestroyed
+  Guid:
+    Data1: 148965385
+    Data2: 1149281020
+    Data3: -1309054827
+    Data4: -376640199
+  Banks:
+  - {fileID: -1291050517952813701}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-3123273484844681987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/music/credits
+  m_EditorClassIdentifier: 
+  Path: event:/music/credits
+  Guid:
+    Data1: -1918268070
+    Data2: 1090842045
+    Data3: 918729639
+    Data4: -1401964231
+  Banks:
+  - {fileID: -1291050517952813701}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 186017
+--- !u!114 &-2927146445104265191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/gameStart
+  m_EditorClassIdentifier: 
+  Path: event:/UI/gameStart
+  Guid:
+    Data1: 1729024493
+    Data2: 1234588638
+    Data3: -1401578323
+    Data4: 1722839991
+  Banks:
+  - {fileID: -1291050517952813701}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-2205499798451437421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/music/main
+  m_EditorClassIdentifier: 
+  Path: event:/music/main
+  Guid:
+    Data1: -2012405557
+    Data2: 1158060440
+    Data3: 164509330
+    Data4: 1065240512
+  Banks:
+  - {fileID: -1291050517952813701}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -3897903547921142961}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 49800
 --- !u!114 &-1291050517952813701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,11 +202,38 @@ MonoBehaviour:
   Path: FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638896625922555592
+  lastModified: 638897574394082815
   FileSizes:
   - Name: Desktop
-    Value: 51680
+    Value: 4264480
   Exists: 1
+--- !u!114 &-772360829390073906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/kart/lapCompleted
+  m_EditorClassIdentifier: 
+  Path: event:/kart/lapCompleted
+  Guid:
+    Data1: -2097922850
+    Data2: 1259859928
+    Data3: -1407043960
+    Data4: 1835361191
+  Banks:
+  - {fileID: -1291050517952813701}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,20 +250,186 @@ MonoBehaviour:
   - {fileID: 5659623228561841128}
   - {fileID: -1291050517952813701}
   EditorEvents:
-  - {fileID: 6176651804302314370}
-  - {fileID: -4853260076636548614}
+  - {fileID: 5041872396386162604}
+  - {fileID: -2205499798451437421}
+  - {fileID: -3771555657841509139}
+  - {fileID: 7268690903119644809}
+  - {fileID: -772360829390073906}
+  - {fileID: 5142575998734067362}
+  - {fileID: 1607592071220625061}
+  - {fileID: -3123273484844681987}
+  - {fileID: 8430851802916344281}
+  - {fileID: -4985506042607054145}
+  - {fileID: -5457721098903590812}
+  - {fileID: 3746228907706665095}
+  - {fileID: -2927146445104265191}
   EditorParameters: []
   MasterBanks:
   - {fileID: -1291050517952813701}
   StringsBanks:
   - {fileID: 5659623228561841128}
   cacheVersion: 131848
-  cacheTime: 638896625922565579
+  cacheTime: 638897574394097884
   SerializableEventsDict:
-  - key: event:/carSFX
+  - key: event:/music/menu
     index: 0
-  - key: event:/test
+  - key: event:/music/main
     index: 1
+  - key: event:/kart/kartDestroyed
+    index: 2
+  - key: event:/kart/gateBoost
+    index: 3
+  - key: event:/kart/lapCompleted
+    index: 4
+  - key: event:/kart/kart
+    index: 5
+  - key: event:/race/startCountdown
+    index: 6
+  - key: event:/music/credits
+    index: 7
+  - key: event:/UI/hover
+    index: 8
+  - key: event:/kart/drift
+    index: 9
+  - key: event:/kart/kartImpact
+    index: 10
+  - key: event:/race/timeLow
+    index: 11
+  - key: event:/UI/gameStart
+    index: 12
+--- !u!114 &450485782357801720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/kart/speed
+  m_EditorClassIdentifier: 
+  Name: speed
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 2067969948
+    data2: 1716106162
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &1607592071220625061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/race/startCountdown
+  m_EditorClassIdentifier: 
+  Path: event:/race/startCountdown
+  Guid:
+    Data1: 1012441925
+    Data2: 1201290657
+    Data3: -1458553702
+    Data4: 715952671
+  Banks:
+  - {fileID: -1291050517952813701}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &3746228907706665095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/race/timeLow
+  m_EditorClassIdentifier: 
+  Path: event:/race/timeLow
+  Guid:
+    Data1: 1784568045
+    Data2: 1184828417
+    Data3: 349387687
+    Data4: 1582023903
+  Banks:
+  - {fileID: -1291050517952813701}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &5041872396386162604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/music/menu
+  m_EditorClassIdentifier: 
+  Path: event:/music/menu
+  Guid:
+    Data1: 1461251492
+    Data2: 1223774911
+    Data3: -629547600
+    Data4: -324026997
+  Banks:
+  - {fileID: -1291050517952813701}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 87304
+--- !u!114 &5142575998734067362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/kart/kart
+  m_EditorClassIdentifier: 
+  Path: event:/kart/kart
+  Guid:
+    Data1: -1955306877
+    Data2: 1076051807
+    Data3: -1840065877
+    Data4: 162777879
+  Banks:
+  - {fileID: -1291050517952813701}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 450485782357801720}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1287
 --- !u!114 &5659623228561841128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,12 +445,12 @@ MonoBehaviour:
   Path: FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638896625922565579
+  lastModified: 638897574394097884
   FileSizes:
   - Name: Desktop
-    Value: 814
+    Value: 1424
   Exists: 1
---- !u!114 &6176651804302314370
+--- !u!114 &7268690903119644809
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,20 +460,47 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/carSFX
+  m_Name: event:/kart/gateBoost
   m_EditorClassIdentifier: 
-  Path: event:/carSFX
+  Path: event:/kart/gateBoost
   Guid:
-    Data1: -151739345
-    Data2: 1244098123
-    Data3: -10809160
-    Data4: 753563545
+    Data1: -592968229
+    Data2: 1305680904
+    Data3: 618328457
+    Data4: -1302552690
   Banks:
   - {fileID: -1291050517952813701}
   IsStream: 0
   Is3D: 0
-  IsOneShot: 0
+  IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 5296
+  Length: 0
+--- !u!114 &8430851802916344281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/hover
+  m_EditorClassIdentifier: 
+  Path: event:/UI/hover
+  Guid:
+    Data1: 1454262635
+    Data2: 1178483842
+    Data3: 901207193
+    Data4: 739123668
+  Banks:
+  - {fileID: -1291050517952813701}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0

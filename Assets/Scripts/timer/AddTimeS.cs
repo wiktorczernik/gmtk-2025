@@ -31,6 +31,7 @@ public class AddTimeS : MonoBehaviour
         _timerText.GetComponent<TextMeshProUGUI>().text = $"+ {_time}.00";
 
         StartCoroutine(DestroyObject(_timerText.GetComponent<TextMeshProUGUI>()));
+        FMODUnity.RuntimeManager.PlayOneShot("{dca805db-1c08-4dd3-89f1-da248e9f5cb2}");
     }
 
     IEnumerator DestroyObject(TextMeshProUGUI text)

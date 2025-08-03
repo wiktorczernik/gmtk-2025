@@ -53,7 +53,11 @@ MonoBehaviour:
   activeLapSettings:
     activeGates: []
   kartClonePrefab: {fileID: 2667294251946721339, guid: fb40da7911a8afc42a5b581303457a56, type: 3}
-  lapManager: {fileID: 0}
+  lapManager: {fileID: 242066147327043894}
+  timerUI: {fileID: 0}
+  countdownUI: {fileID: 0}
+  pauseUI: {fileID: 0}
+  gameOverUI: {fileID: 0}
 --- !u!114 &406710624771260091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +70,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6c5f2e810c4fc34aaa09dfa4c151f8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathWidth: 0.2
+  pathYoffset: -0.2
+  pathAppearDuration: 1
+  pathMaterial: {fileID: 2100000, guid: 1a399606b0448464f8cc79c22be54b08, type: 2}
 --- !u!114 &242066147327043894
 MonoBehaviour:
   m_ObjectHideFlags: 0

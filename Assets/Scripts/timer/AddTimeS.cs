@@ -6,13 +6,13 @@ public class AddTimeS : MonoBehaviour
 {
     private GameObject _timerObjectCopy;
 
-    #region GameObjects
-    [Header("GameObjects")]
+    #region Components
+    [Header("Components")]
     [SerializeField] private GameObject _timerObject;
     #endregion
 
-    #region Fields
-    [Header("Fields")]
+    #region Input State
+    [Header("Input State")]
     [SerializeField] private double _time;
     #endregion
 
@@ -20,6 +20,7 @@ public class AddTimeS : MonoBehaviour
     {
         _timerObject.GetComponent<TimerController>().time += _time;
         _timerObjectCopy = Instantiate(_timerObject);
+        _timerObjectCopy.tag = "TimeAdder";
         GameObject _timerObjectChild = _timerObjectCopy.transform.GetChild(0).gameObject;
         GameObject _timerText = _timerObjectCopy.transform.GetChild(1).gameObject;
         Destroy(_timerObjectCopy.GetComponent<TimerController>());

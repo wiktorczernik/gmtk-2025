@@ -3,10 +3,11 @@ using UnityEngine.Events;
 
 public class TimeGate : MonoBehaviour
 {
-    public bool isActive = true;
-    
     [Header("Components")]
     public Animator animator;
+
+    [Header("State")]
+    public bool isActive = true;
 
     #region Unity Events
     [Header("UnityEvents")]

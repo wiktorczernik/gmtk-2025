@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class LapCheckpointGate : MonoBehaviour
 {
-    #region Variables
+    #region State
+    [Header("State")]
     [SerializeField] bool _isActive = true;
     #endregion
 

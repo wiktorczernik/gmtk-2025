@@ -6,24 +6,23 @@ public class TimerController : MonoBehaviour
 {
     static TimerController main;
 
-    #region GameObjects
-    [Header("Objects")]
+    #region Components
+    [Header("Components")]
     [SerializeField] private GameObject _timerUI;
     [SerializeField] private TextMeshProUGUI _timerText;
     #endregion
 
-    #region Fields
-    [Header("Fields")]
+    #region Input State
+    [Header("Input State")]
     [SerializeField] private double _defaultTime = 30;
-    [SerializeField] private bool _defaultActive = false;
     #endregion
 
     public static event Action onEnd;
 
-    #region Variables
-    [Header("Variables")]
+    #region State
+    [Header("State")]
     [SerializeField] private double _time;
-    [SerializeField] private bool _active;
+    [SerializeField] private bool _active = false;
     #endregion
 
     #region Public Variables
@@ -64,9 +63,9 @@ public class TimerController : MonoBehaviour
             return;
         }
 
-        _timerUI.SetActive(_defaultActive);
+        _timerUI.SetActive(active);
         time = _defaultTime;
-        _timerText.text = time + ".00";
+        _timerText.text = string.Format("{0:0}", time);
     }
 
     void Update()

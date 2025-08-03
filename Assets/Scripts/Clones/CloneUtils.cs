@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CloneUtils : MonoBehaviour
@@ -15,6 +14,10 @@ public class CloneUtils : MonoBehaviour
     public static Clone clonePrefab { get; set; }
     public static CloneRecording currentlyRecorded { get; private set; } = null;
     public static readonly List<ClonePlayback> currentlyPlayed = new();
+
+    [Header("Clone Settings")]
+    public float cloneShowDuration = 0.25f;
+    public float cloneHideDuration = 0.25f;
 
     [Header("Path Settings")]
     public float pathWidth = 0.5f;
@@ -30,6 +33,9 @@ public class CloneUtils : MonoBehaviour
         ClonePlayback playback = new();
         playback.recording = recording;
         playback.cloneInstance = Instantiate(clonePrefab);
+        playback.cloneInstance.showDuration = main.cloneShowDuration;
+        playback.cloneInstance.hideDuration = main.cloneHideDuration;
+        playback.cloneInstance.Show();
         playback.state = ClonePlaybackState.Playing;
         currentlyPlayed.Add(playback);
         main.StartCoroutine(main.AppearPath(playback));
@@ -48,9 +54,24 @@ public class CloneUtils : MonoBehaviour
     }
     public static void ResetAllPlayedTime()
     {
-        foreach(var playback in currentlyPlayed)
+        main.StartCoroutine(main.ResetPlayedTimeSeq());
+    }
+    IEnumerator ResetPlayedTimeSeq()
+    {
+        foreach (var playback in currentlyPlayed)
+        {
+            playback.cloneInstance.Hide();
+        }
+        yield return new WaitForSeconds(cloneHideDuration);
+
+        foreach (var playback in currentlyPlayed)
         {
             playback.timePlayed = 0f;
+        }
+
+        foreach (var playback in currentlyPlayed)
+        {
+            playback.cloneInstance.Show();
         }
     }
 
@@ -82,53 +103,16 @@ public class CloneUtils : MonoBehaviour
 
             int total = currentlyRecorded.frames.Count;
             int trim = Mathf.Min(trimFrameCount, total / 2 - 1);
-            var core = currentlyRecorded.frames.Skip(trim).Take(total - 2 * trim).ToList();
+            var core = currentlyRecorded.frames.Skip(trimFrameCount).ToList();
 
             float coreDuration = (core.Count - 1) * recordingDeltaTime;
             currentlyRecorded.duration = coreDuration;
-
-            int segCount = Mathf.Min(core.Count - 1, 15);
-            float minSpeedEnd = float.MaxValue;
-            float minSpeedStart = float.MaxValue;
-            for (int i = core.Count - segCount + 1; i < core.Count; i++)
-            {
-                float dist = Vector3.Distance(core[i - 1].position, core[i].position);
-                minSpeedEnd = Mathf.Min(minSpeedEnd, dist / recordingDeltaTime);
-            }
-            for (int i = 1; i <= segCount; i++)
-            {
-                float dist = Vector3.Distance(core[i - 1].position, core[i].position);
-                minSpeedStart = Mathf.Min(minSpeedStart, dist / recordingDeltaTime);
-            }
-            if (minSpeedEnd <= 0f) minSpeedEnd = minSpeedStart;
-            if (minSpeedStart <= 0f) minSpeedStart = minSpeedEnd;
-
-            var startFrame = core.First();
-            var endFrame = core.Last();
-            float closingDist = Vector3.Distance(endFrame.position, startFrame.position);
-            float T = closingDist * 2f / (minSpeedEnd + minSpeedStart);
-            int closeFrames = Mathf.CeilToInt(T * recordingFrameRate);
-            float dt = recordingDeltaTime;
-
-            var finalFrames = new List<CloneFrameState>(core);
-            for (int i = 1; i <= closeFrames; i++)
-            {
-                float t = i * dt;
-                float s = minSpeedEnd * t + 0.5f * (minSpeedStart - minSpeedEnd) * (t * t / T);
-                float alpha = Mathf.Clamp01(s / closingDist);
-
-                Vector3 pos = Vector3.Lerp(endFrame.position, startFrame.position, alpha);
-                Quaternion rot = Quaternion.Slerp(endFrame.rotation, startFrame.rotation, alpha);
-                finalFrames.Add(new CloneFrameState { position = pos, rotation = rot });
-            }
-
-            currentlyRecorded.frames = finalFrames;
-            currentlyRecorded.duration = (finalFrames.Count - 1) * recordingDeltaTime;
+            currentlyRecorded.frames = core;
             recordingState = RecordingState.Not;
 
             currentlyRecorded.pathLine = new GameObject().AddComponent<LineRenderer>();
             List<Vector3> positions = new();
-            foreach (var frame in finalFrames)
+            foreach (var frame in core)
                 positions.Add(frame.position + Vector3.up * pathYoffset);
             currentlyRecorded.pathLine.positionCount = positions.Count;
             currentlyRecorded.pathLine.SetPositions(positions.ToArray());
@@ -149,7 +133,14 @@ public class CloneUtils : MonoBehaviour
             var frames = pb.recording.frames;
             int count = frames.Count;
 
+
             pb.timePlayed += recordingDeltaTime;
+
+            if (pb.timePlayed >= pb.recording.duration - cloneHideDuration - 0.5f)
+            {
+                pb.cloneInstance.Hide();
+            }
+
             float lerpT = pb.timePlayed / recordingDeltaTime;
             int idx = (int)lerpT;
             float frac = lerpT - idx;

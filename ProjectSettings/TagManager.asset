@@ -8,6 +8,7 @@ TagManager:
   - LapTrigger
   - Manager
   - LapCheckpoint
+  - TimeAdder
   layers:
   - Default
   - TransparentFX

@@ -144,14 +144,10 @@ public class GameManager : MonoBehaviour
     IEnumerator OnLapCompletion()
     {
         lapManager.IncreaseLapCounter();
-        Debug.Log("Completion 0");
         CloneRecording recording = CloneUtils.RequestStopRecording();
         CloneUtils.PlayLooped(recording);
-        Debug.Log("Completion 1");
         yield return new WaitUntil(() => CloneUtils.recordingState == CloneUtils.RecordingState.Not);
-        Debug.Log("Completion 2");
         CloneUtils.RequestStartRecording(kartControllerInstance);
-        Debug.Log("Completion 3");
         kartControllerInstance.ApplyLapConfig(LapManager.currentLap - 1);
         ActivateLapSettings(lapIndex: LapManager.currentLap - 1, deactivatePrevious: true);
         CloneUtils.ResetAllPlayedTime();

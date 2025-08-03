@@ -57,6 +57,8 @@ public class KartController : MonoBehaviour, ICloneable
     [SerializeField] private Rigidbody sphere;
     [SerializeField] private GameObject kartModel;
     [SerializeField] private float kartModelYModifier;
+    [SerializeField] private TrailRenderer leftTrail;
+    [SerializeField] private TrailRenderer rightTrail;
     [Header("Speed")]
     [SerializeField] private float maxSpeed;
     [SerializeField] private float maxReverseSpeed;
@@ -127,10 +129,14 @@ public class KartController : MonoBehaviour, ICloneable
 
             if (isDrifting)
             {
+                leftTrail.emitting = true;
+                rightTrail.emitting = true;
                 steeringAngleSpeed = driftSteeringAngleSpeed;
             }
             else
             {
+                leftTrail.emitting = false;
+                rightTrail.emitting = false;
                 steeringAngleSpeed = normalSteeringAngleSpeed;
             }
         }
@@ -232,6 +238,8 @@ public class KartController : MonoBehaviour, ICloneable
     }
     void Start()
     {
+        leftTrail.emitting = false;
+        rightTrail.emitting = false;
         kartAudioInstance = RuntimeManager.CreateInstance(kartSoundRef);
         RuntimeManager.AttachInstanceToGameObject(kartAudioInstance, gameObject);
         kartAudioInstance.start();

@@ -1,6 +1,7 @@
 using FMOD.Studio;
 using FMODUnity;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class KartController : MonoBehaviour, ICloneable
@@ -77,8 +78,12 @@ public class KartController : MonoBehaviour, ICloneable
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float bumpForce;
     [SerializeField] private bool ableToDrive = true;
+    private Vector3 ogPos;
 
-
+    private void Awake()
+    {
+        ogPos = transform.position;
+    }
 
     void Update()
     {
@@ -214,6 +219,7 @@ public class KartController : MonoBehaviour, ICloneable
         {
             RuntimeManager.PlayOneShot(kartImpactSoundRef);
             Vector3 dir = Vector3.Normalize(transform.position - collision.contacts[0].point);
+            dir = new Vector3(dir.x, 0, dir.z);
             sphere.AddForce(dir * 30, ForceMode.VelocityChange);
         }
     }
@@ -250,6 +256,14 @@ public class KartController : MonoBehaviour, ICloneable
     {
         kartAudioInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         kartAudioInstance.release();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Catcher"))
+        {
+            transform.position = ogPos;
+        }
     }
 }
 

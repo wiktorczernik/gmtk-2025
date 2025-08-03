@@ -9,6 +9,7 @@ TagManager:
   - Manager
   - LapCheckpoint
   - TimeAdder
+  - Catcher
   layers:
   - Default
   - TransparentFX

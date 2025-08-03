@@ -5,7 +5,7 @@
 			<value>drift</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{366f2f13-571f-473d-a177-07c2f470114c}</destination>
@@ -96,7 +96,6 @@
 	<object class="MixerBusEffectChain" id="{0e352b64-eaa9-41de-bbba-73348b876a6e}">
 		<relationship name="effects">
 			<destination>{84038404-3154-450c-8df4-067c04e69852}</destination>
-			<destination>{7b3f041a-880d-4c58-9ed8-74c20cd91b20}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{194ff77f-ff63-4839-b223-b76db12a7f89}" />
@@ -113,5 +112,4 @@
 	</object>
 	<object class="MixerBusFader" id="{34c6b5e6-a6f9-4542-bbff-70bf3613d219}" />
 	<object class="MixerBusFader" id="{84038404-3154-450c-8df4-067c04e69852}" />
-	<object class="SpatialiserEffect" id="{7b3f041a-880d-4c58-9ed8-74c20cd91b20}" />
 </objects>

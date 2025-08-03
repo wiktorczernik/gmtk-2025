@@ -70,7 +70,7 @@ MonoBehaviour:
   StudioPath: 
   Min: 0
   Max: 1
-  Default: 1
+  Default: 0
   ID:
     data1: 1260481232
     data2: 298555184
@@ -186,7 +186,7 @@ MonoBehaviour:
   - {fileID: -3897903547921142961}
   MinDistance: 1
   MaxDistance: 20
-  Length: 49800
+  Length: 75993
 --- !u!114 &-1291050517952813701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,10 +202,10 @@ MonoBehaviour:
   Path: FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638898279308756088
+  lastModified: 638898396681156536
   FileSizes:
   - Name: Desktop
-    Value: 4264704
+    Value: 6622464
   Exists: 1
 --- !u!114 &-772360829390073906
 MonoBehaviour:
@@ -269,7 +269,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 5659623228561841128}
   cacheVersion: 131848
-  cacheTime: 638898279308777146
+  cacheTime: 638898396681170069
   SerializableEventsDict:
   - key: event:/music/menu
     index: 0
@@ -445,7 +445,7 @@ MonoBehaviour:
   Path: FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638898279308777146
+  lastModified: 638898396681170069
   FileSizes:
   - Name: Desktop
     Value: 1424

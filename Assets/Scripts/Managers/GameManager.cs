@@ -151,6 +151,7 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         TimerController.onEnd -= OnTimeEnd;
         mainAudioEventIns.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        FMODUnity.RuntimeManager.PlayOneShot("{08e10809-a2fc-4480-9568-f9b139ed8ce9}");
     }
 
     IEnumerator OnLapCompletion()

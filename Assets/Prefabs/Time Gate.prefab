@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6be20e700619b84aae80cc8d8e05ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 0
   animator: {fileID: 2356862039582473560}
+  isActive: 0
   onCartPass:
     m_PersistentCalls:
       m_Calls:
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timerObject: {fileID: 0}
-  _time: 15
+  _time: 10
 --- !u!114 &7066212678430819252
 MonoBehaviour:
   m_ObjectHideFlags: 0

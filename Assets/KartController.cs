@@ -38,7 +38,7 @@ public class KartController : MonoBehaviour, ICloneable
     public Quaternion steeringTargetRot;
     public float yaw => sphere.transform.eulerAngles.y;
     public float groundedForwardSpeed => Vector3.Dot(sphere.linearVelocity, groundedForward);
-    public Vector3 worldForward => Quaternion.Euler(0, kartModel.transform.eulerAngles.y, 0) * Vector3.forward;
+    public Vector3 worldForward => Quaternion.Euler(0, yaw, 0) * Vector3.forward;
     public Vector3 groundedForward => Vector3.ProjectOnPlane(worldForward, groundNormal);
     public Vector3 groundNormal = Vector3.up;
     public bool isGrounded = true;

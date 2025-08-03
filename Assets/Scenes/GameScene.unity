@@ -33870,12 +33870,24 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
+      propertyPath: maxRotationAngle
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
       propertyPath: kartModelYModifier
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
+      propertyPath: driftSteeringAngleSpeed
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
+      propertyPath: normalSteeringAngleSpeed
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2397503989425869322, guid: c719c38e48359a149a8172d63f07ef75, type: 3}
       propertyPath: lapConfigs.Array.data[1].maxSpeed

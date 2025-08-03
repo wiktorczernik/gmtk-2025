@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -10,6 +12,11 @@ public class GameManager : MonoBehaviour
 
     public GameLapSettings[] allLapSettings = new GameLapSettings[1];
     public GameLapSettings activeLapSettings;
+
+    [Header("Audio References")]
+    public EventReference mainAudioEventRef;
+
+    public EventInstance mainAudioEventIns;
 
     #region Components
     [Header("Components")]
@@ -42,11 +49,15 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         main = null;
+        mainAudioEventIns.release();
     }
     
     IEnumerator Start()
     {
         yield return null;
+
+        mainAudioEventIns = RuntimeManager.CreateInstance(mainAudioEventRef);
+
         onGameStart?.Invoke();
         OnGameStart();
     }
@@ -83,6 +94,7 @@ public class GameManager : MonoBehaviour
     void OnGameStart()
     {
         isGameOver = false;
+        mainAudioEventIns.start();
         pauseUI.SetActive(false);
         gameOverUI.SetActive(false);
         countdownUI.SetActive(true);
@@ -99,6 +111,8 @@ public class GameManager : MonoBehaviour
     void OnPause()
     {
         isPaused = !isPaused;
+
+        mainAudioEventIns.setPaused(isPaused);
 
         if (isPaused)
         {
@@ -124,6 +138,7 @@ public class GameManager : MonoBehaviour
         gameOverUI.SetActive(true);
         isGameOver = true;
         TimerController.onEnd -= OnTimeEnd;
+        mainAudioEventIns.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     IEnumerator OnLapCompletion()

@@ -16,7 +16,9 @@ public class CloneUtils : MonoBehaviour
     public static readonly List<ClonePlayback> currentlyPlayed = new();
 
     [Header("Clone Settings")]
-    public float cloneShowDuration = 0.25f;
+    public float cloneShowLerp = 5f;
+    public float cloneHideLerp = 5f;
+    public float cloneFinishPrehide = 0.5f;
     public float cloneHideDuration = 0.25f;
 
     [Header("Path Settings")]
@@ -33,8 +35,8 @@ public class CloneUtils : MonoBehaviour
         ClonePlayback playback = new();
         playback.recording = recording;
         playback.cloneInstance = Instantiate(clonePrefab);
-        playback.cloneInstance.showDuration = main.cloneShowDuration;
-        playback.cloneInstance.hideDuration = main.cloneHideDuration;
+        playback.cloneInstance.showLerp = main.cloneShowLerp;
+        playback.cloneInstance.hideLerp = main.cloneHideLerp;
         playback.cloneInstance.Show();
         playback.state = ClonePlaybackState.Playing;
         currentlyPlayed.Add(playback);
@@ -60,7 +62,7 @@ public class CloneUtils : MonoBehaviour
     {
         foreach (var playback in currentlyPlayed)
         {
-            playback.cloneInstance.Hide();
+            playback.cloneInstance.HideForce();
         }
         yield return new WaitForSeconds(cloneHideDuration);
 
@@ -136,7 +138,7 @@ public class CloneUtils : MonoBehaviour
 
             pb.timePlayed += recordingDeltaTime;
 
-            if (pb.timePlayed >= pb.recording.duration - cloneHideDuration - 0.5f)
+            if (pb.timePlayed >= pb.recording.duration - cloneFinishPrehide)
             {
                 pb.cloneInstance.Hide();
             }

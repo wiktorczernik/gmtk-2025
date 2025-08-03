@@ -79,6 +79,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6c5f2e810c4fc34aaa09dfa4c151f8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cloneShowLerp: 10
+  cloneHideLerp: 10
+  cloneFinishPrehide: 0.5
+  cloneHideDuration: 0.5
   pathWidth: 0.2
   pathYoffset: -0.2
   pathAppearDuration: 1

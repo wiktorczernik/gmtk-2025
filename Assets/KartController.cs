@@ -101,11 +101,11 @@ public class KartController : MonoBehaviour, ICloneable
                 throttleInput = 0;
                 driftInput = false;
             }
-
+            /*
             if (throttleInput < 0)
             {
                 steeringInput *= -1;
-            }
+            }*/
 
 
             if (isGrounded && driftInput && !isDrifting && Mathf.Abs(steeringInput) > float.Epsilon && throttleInput > float.Epsilon)

@@ -217,12 +217,12 @@ public class KartController : MonoBehaviour, ICloneable
     }
     public void ApplyLapConfig(int lapIndex)
     {
-        if (lapIndex >= lapConfigs.Length)
+        /*if (lapIndex >= lapConfigs.Length)
             lapIndex = lapConfigs.Length - 1;
-        KartLapConfig config = lapConfigs[lapIndex];
-        maxSpeed = config.maxSpeed;
-        acceleration = config.acceleration;
-        deceleration = config.deceleration;
+        KartLapConfig config = lapConfigs[lapIndex];*/
+        maxSpeed += 3;
+        //acceleration += 3;
+        //deceleration -= 3;
     }
 }
 

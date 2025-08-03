@@ -2,6 +2,7 @@ using FMOD.Studio;
 using FMODUnity;
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
     public GameObject countdownUI;
     public GameObject pauseUI;
     public GameObject gameOverUI;
+    public TextMeshProUGUI gameOverScoreText;
     #endregion
 
     KartController _kartControllerInstance;
@@ -40,6 +42,8 @@ public class GameManager : MonoBehaviour
 
     public static bool isPaused = false;
     public static bool isGameOver = false;
+
+    public int highScore;
 
     private void Awake()
     {
@@ -135,7 +139,15 @@ public class GameManager : MonoBehaviour
 
     void OnTimeEnd()
     {
+        int currentLap = LapManager.currentLap;
+
+        if (currentLap > highScore)
+        {
+            highScore = currentLap;
+        }
+
         gameOverUI.SetActive(true);
+        gameOverScoreText.text = "Score: " + currentLap + " Laps\nHigh Score: " + highScore + " Laps";
         isGameOver = true;
         TimerController.onEnd -= OnTimeEnd;
         mainAudioEventIns.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);

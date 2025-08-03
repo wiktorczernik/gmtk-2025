@@ -65,6 +65,8 @@ MonoBehaviour:
   countdownUI: {fileID: 0}
   pauseUI: {fileID: 0}
   gameOverUI: {fileID: 0}
+  gameOverScoreText: {fileID: 0}
+  highScore: 0
 --- !u!114 &406710624771260091
 MonoBehaviour:
   m_ObjectHideFlags: 0

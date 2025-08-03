@@ -31681,17 +31681,6 @@ Texture2D:
     offset: 0
     size: 0
     path: 
---- !u!114 &1430691414 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 242066147327043894, guid: df7df3ede1342c24f91f6b1cff2754e8, type: 3}
-  m_PrefabInstance: {fileID: 4314227462777544535}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4e33a29d42528e4a97456962355b678, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1470420021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31781,6 +31770,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee0c3e5cfd996fa41b54d52cd80c4664, type: 3}
+--- !u!114 &1474252151 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 536974229344895572, guid: aca5420f2a45f1b41aaff0f6e90c10e4, type: 3}
+  m_PrefabInstance: {fileID: 1693815492}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1539507476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33741,17 +33741,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1708153508}
     - target: {fileID: 1954658180579405365, guid: df7df3ede1342c24f91f6b1cff2754e8, type: 3}
-      propertyPath: lapManager
-      value: 
-      objectReference: {fileID: 1430691414}
-    - target: {fileID: 1954658180579405365, guid: df7df3ede1342c24f91f6b1cff2754e8, type: 3}
       propertyPath: countdownUI
       value: 
       objectReference: {fileID: 488160378}
     - target: {fileID: 1954658180579405365, guid: df7df3ede1342c24f91f6b1cff2754e8, type: 3}
-      propertyPath: allLapSettings.Array.data[0].activeGates.Array.size
-      value: 2
-      objectReference: {fileID: 0}
+      propertyPath: gameOverScoreText
+      value: 
+      objectReference: {fileID: 1474252151}
     - target: {fileID: 1954658180579405365, guid: df7df3ede1342c24f91f6b1cff2754e8, type: 3}
       propertyPath: 'allLapSettings.Array.data[0].activeGates.Array.data[0]'
       value: 

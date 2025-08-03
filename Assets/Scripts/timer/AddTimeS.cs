@@ -31,7 +31,7 @@ public class AddTimeS : MonoBehaviour
         Destroy(_timerObjectChild);
 
         _timerText.transform.SetPositionAndRotation(new Vector3(_timerText.transform.position.x, 460, _timerText.transform.position.z), Quaternion.identity);
-        _timerText.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 18);
+        _timerText.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 54);
         _timerText.GetComponent<TextMeshProUGUI>().text = $"+ {_time}.00";
 
         StartCoroutine(DestroyObject(_timerText.GetComponent<TextMeshProUGUI>()));

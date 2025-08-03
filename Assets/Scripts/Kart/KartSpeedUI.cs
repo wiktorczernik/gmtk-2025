@@ -24,7 +24,7 @@ public class KartSpeedUI : MonoBehaviour
 
         if (spinning)
         {
-            dial.transform.rotation = Quaternion.Euler(dial.transform.rotation.x, dial.transform.rotation.y, 360 * ((3 * (spint * spint)) - (2 * (spint * spint * spint))));
+            //dial.transform.rotation = Quaternion.Euler(dial.transform.rotation.x, dial.transform.rotation.y, 360 * ((3 * (spint * spint)) - (2 * (spint * spint * spint))));
             spint += Time.deltaTime;
             if (spint > 1)
             {
@@ -33,7 +33,7 @@ public class KartSpeedUI : MonoBehaviour
             }
         }
 
-        indicator.transform.rotation = Quaternion.Euler(0f, 0, 135-controller.groundedForwardSpeed);
-        text.text = Mathf.RoundToInt(controller.groundedForwardSpeed).ToString();
+        //indicator.transform.rotation = Quaternion.Euler(0f, 0, 135-controller.groundedForwardSpeed);
+        text.text = "Speed: " + Mathf.RoundToInt(controller.groundedForwardSpeed).ToString();
     }
 }

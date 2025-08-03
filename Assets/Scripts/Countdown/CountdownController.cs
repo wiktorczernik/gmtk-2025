@@ -44,7 +44,7 @@ public class CountdownController : MonoBehaviour
             _countdownText.text = string.Format("{0:0}", _countdownTime);
         }
 
-        if (_countdownTime <= 0 && !isCountdownEnd)
+        if (_countdownTime <= 1 && !isCountdownEnd)
         {
             StartCoroutine(GameStart());
         }

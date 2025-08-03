@@ -5,7 +5,7 @@
 			<value>kart</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{366f2f13-571f-473d-a177-07c2f470114c}</destination>
@@ -139,14 +139,12 @@
 	<object class="MixerBusEffectChain" id="{4f155a85-209a-4ba8-b5d8-3ed667ee4b8e}">
 		<relationship name="effects">
 			<destination>{d8ee34b4-8f27-4bc0-bca8-244cf16f5db6}</destination>
-			<destination>{e804bc96-4d6d-40eb-b65f-84c45a20ef60}</destination>
 			<destination>{4208d29b-42e2-49e5-baf2-ef033b57e0af}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{b853793a-8cfd-4c1e-a9e5-4159e9a765d2}" />
 	<object class="MixerBusFader" id="{9f57dcec-77b2-4566-9213-d611a35885cf}" />
 	<object class="MixerBusFader" id="{d8ee34b4-8f27-4bc0-bca8-244cf16f5db6}" />
-	<object class="SpatialiserEffect" id="{e804bc96-4d6d-40eb-b65f-84c45a20ef60}" />
 	<object class="PitchShifterEffect" id="{4208d29b-42e2-49e5-baf2-ef033b57e0af}">
 		<relationship name="automators">
 			<destination>{12633b7c-7dfd-456f-9763-a5ebea6a77fc}</destination>

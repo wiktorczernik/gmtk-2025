@@ -46,6 +46,13 @@ public class CloneUtils : MonoBehaviour
 
         return currentlyRecorded;
     }
+    public static void ResetAllPlayedTime()
+    {
+        foreach(var playback in currentlyPlayed)
+        {
+            playback.timePlayed = 0f;
+        }
+    }
 
     public static CloneRecording RequestStopRecording()
     {

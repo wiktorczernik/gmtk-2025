@@ -4889,7 +4889,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d78080890477541a521cffff9e58d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isVisible: 0
+  showDuration: 0.5
+  hideDuration: 0.5
   _model: {fileID: 7349418009550923102}
 --- !u!114 &1137784670618172656
 MonoBehaviour:
@@ -14666,7 +14667,7 @@ Transform:
   m_LocalRotation: {x: -0.00000033058862, y: 0.7071068, z: -0.70710677, w: 0.0000004332347}
   m_LocalPosition: {x: 1.365, y: -0.839, z: -1.223}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8182364618623479589}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: -180}
@@ -19682,15 +19683,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 3257da88d240a4444acf55dfd8efa3a9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3257da88d240a4444acf55dfd8efa3a9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3257da88d240a4444acf55dfd8efa3a9, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3257da88d240a4444acf55dfd8efa3a9, type: 3}
       propertyPath: m_LocalPosition.x

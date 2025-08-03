@@ -3,14 +3,19 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
-    public static void Play()
+    public void Play()
     {
         SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
-    public static void ReturnToMenu()
+    public void ReturnToMenu()
     {
         SceneManager.LoadScene(0, LoadSceneMode.Single);
+    }
+
+    public void Retry()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
     }
 
     public void Quit()

@@ -14,22 +14,31 @@ public class KartController : MonoBehaviour, ICloneable
     public float steeringLerp = 2f;
     [SerializeField] private bool isDrifting;
     [SerializeField] private float driftDir;
-    [SerializeField] private float horizontalAxis;
-    [SerializeField] private float verticalAxis;
-    [SerializeField] private float driftAngle;
-    [SerializeField] private float targetDriftAngle;
-    [SerializeField] private float driftAngleLerp;
+    [SerializeField] private float modelYawTilt;
+
+    [Header("Model Settings")]
+    [SerializeField] private float targetSteerAngle = 15;
+    [SerializeField] private float targetDriftAngle = 45;
+    [SerializeField] private float yawTiltLerp = 2;
+
+    [Header("Control Settings")]
+    public KeyCode driftKey = KeyCode.Space;
 
     [Header("Ground Checking Settings")]
     public float groundMaxDistance = 0.5f;
     public float groundCheckRadius = 1.2f;
+
+    [Header("Input State")]
+    public float steeringInput = 0.0f;
+    public float throttleInput = 0.0f;
+    public bool driftInput = false;
 
     [Header("State")]
     public Quaternion steeringCurrentRot;
     public Quaternion steeringTargetRot;
     public float yaw => sphere.transform.eulerAngles.y;
     public float groundedForwardSpeed => Vector3.Dot(sphere.linearVelocity, groundedForward);
-    public Vector3 worldForward => Quaternion.Euler(0, yaw, 0) * Vector3.forward;
+    public Vector3 worldForward => Quaternion.Euler(0, kartModel.transform.eulerAngles.y, 0) * Vector3.forward;
     public Vector3 groundedForward => Vector3.ProjectOnPlane(worldForward, groundNormal);
     public Vector3 groundNormal = Vector3.up;
     public bool isGrounded = true;
@@ -61,107 +70,121 @@ public class KartController : MonoBehaviour, ICloneable
 
     void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (!GameManager.isGameOver)
         {
-            sphere.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
-        }*/
+            if (ableToDrive)
+            {
+                steeringInput = Input.GetAxisRaw("Horizontal");
+                throttleInput = Input.GetAxisRaw("Vertical");
+                driftInput = Input.GetKey(driftKey);
+            }
+            else
+            {
+                steeringInput = 0;
+                throttleInput = 0;
+                driftInput = false;
+            }
 
-        if (ableToDrive)
-        {
-            horizontalAxis = Input.GetAxisRaw("Horizontal");
-            verticalAxis = Input.GetAxisRaw("Vertical");
-        }
-        else
-        {
-            horizontalAxis = 0;
-            verticalAxis = 0;
-        }
+            if (throttleInput < 0)
+            {
+                steeringInput *= -1;
+            }
 
 
-        if (isGrounded && Input.GetKey(KeyCode.LeftShift) && !isDrifting && horizontalAxis != 0 && Input.GetKey(KeyCode.W))
-        {
-            isDrifting = true;
-            driftDir = horizontalAxis;
-        }
+            if (isGrounded && driftInput && !isDrifting && Mathf.Abs(steeringInput) > float.Epsilon && throttleInput > float.Epsilon)
+            {
+                isDrifting = true;
+                driftDir = steeringInput;
+            }
 
-        if (!Input.GetKey(KeyCode.LeftShift) || !Input.GetKey(KeyCode.W))
-        {
-            isDrifting = false;
-            driftDir = 0;
-        }
+            if (!driftInput || throttleInput < float.Epsilon)
+            {
+                isDrifting = false;
+                driftDir = 0;
+            }
 
-        //Align kart to ground
-        kartModel.transform.position = transform.position - new Vector3(0, kartModelYModifier);
-        kartModel.transform.rotation = Quaternion.Lerp(kartModel.transform.rotation, Quaternion.FromToRotation(kartModel.transform.up, groundNormal) * kartModel.transform.rotation, 0.1f);
-        kartModel.transform.localEulerAngles = new Vector3(kartModel.transform.localEulerAngles.x, 0, kartModel.transform.localEulerAngles.z);
+            //Align kart to ground
+            kartModel.transform.position = transform.position - new Vector3(0, kartModelYModifier);
+            kartModel.transform.rotation = Quaternion.Lerp(kartModel.transform.rotation, Quaternion.FromToRotation(kartModel.transform.up, groundNormal) * kartModel.transform.rotation, 0.1f);
+            kartModel.transform.localEulerAngles = new Vector3(kartModel.transform.localEulerAngles.x, 0, kartModel.transform.localEulerAngles.z);
 
-        driftAngle = Mathf.Lerp(driftAngle, targetDriftAngle * driftDir, driftAngleLerp * Time.deltaTime);
-        kartModel.transform.eulerAngles += new Vector3(0, driftAngle, 0);
+            float targetAngle = isDrifting ? targetDriftAngle : targetSteerAngle;
+            float targetDir = isDrifting ? driftDir : steeringInput * currentSpeed;
+            modelYawTilt = Mathf.Lerp(modelYawTilt, targetAngle * targetDir, yawTiltLerp * Time.deltaTime);
+            kartModel.transform.eulerAngles += new Vector3(0, modelYawTilt, 0);
 
-        if (isDrifting)
-        {
-            steeringAngleSpeed = driftSteeringAngleSpeed;
-        }
-        else
-        {
-            steeringAngleSpeed = normalSteeringAngleSpeed;
+            if (isDrifting)
+            {
+                steeringAngleSpeed = driftSteeringAngleSpeed;
+            }
+            else
+            {
+                steeringAngleSpeed = normalSteeringAngleSpeed;
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        float forwardSpeed = groundedForwardSpeed;
-        RaycastHit hitInfo;
-        bool hit = Physics.SphereCast(sphere.position + new Vector3(0, 0.1f), groundCheckRadius, Vector3.down, out hitInfo, groundMaxDistance, groundLayer);
-        if (hit)
+        if (CountdownController.isCountdownEnd && !GameManager.isGameOver)
         {
-            isGrounded = true;
-            groundNormal = hitInfo.normal;
-        }
-        else
-        {
-            isGrounded = false;
-            groundNormal = Vector3.up;
-        }
+            float forwardSpeed = groundedForwardSpeed;
+            RaycastHit hitInfo;
+            bool hit = Physics.SphereCast(sphere.position + new Vector3(0, 0.1f), groundCheckRadius, Vector3.down, out hitInfo, groundMaxDistance, groundLayer);
+            if (hit)
+            {
+                isGrounded = true;
+                groundNormal = hitInfo.normal;
+            }
+            else
+            {
+                isGrounded = false;
+                groundNormal = Vector3.up;
+            }
 
-        //Apply gravity if not grounded
-        if (!isGrounded)
-        {
-            sphere.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
-        }
+            //Apply gravity if not grounded
+            if (!isGrounded)
+            {
+                sphere.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
+            }
 
-        sphere.AddForce(-groundedForward * forwardSpeed, ForceMode.VelocityChange);
+            sphere.AddForce(-groundedForward * forwardSpeed, ForceMode.VelocityChange);
 
-        if (isDrifting && horizontalAxis != driftDir)
-        {
-            horizontalAxis = 0;
-        }
+            if (isDrifting && steeringInput != driftDir)
+            {
+                steeringInput = 0;
+            }
 
-        Quaternion steeringTargetRot = Quaternion.Euler(horizontalAxis * steeringAngleSpeed * speedToSteeringCurve.Evaluate(forwardSpeed) * groundNormal * Time.fixedDeltaTime);
-        Vector3 steeringDeltaAngles = steeringTargetRot.eulerAngles;
-        steeringDeltaAngles.x = 0;
-        steeringDeltaAngles.z = 0;
-        steeringTargetRot = Quaternion.Euler(steeringDeltaAngles);
-        steeringCurrentRot = Quaternion.Lerp(steeringCurrentRot, steeringTargetRot, steeringLerp * Time.fixedDeltaTime);
-        sphere.MoveRotation(sphere.rotation * steeringCurrentRot);
+            Quaternion steeringTargetRot = Quaternion.Euler(steeringInput * steeringAngleSpeed * speedToSteeringCurve.Evaluate(Mathf.Abs(forwardSpeed)) * Mathf.Sign(forwardSpeed) * groundNormal * Time.fixedDeltaTime);
 
-        sphere.AddForce(groundedForward * forwardSpeed, ForceMode.VelocityChange);
+            // limit steering to the y axis
+            Vector3 steeringDeltaAngles = steeringTargetRot.eulerAngles;
+            steeringDeltaAngles.x = 0;
+            steeringDeltaAngles.z = 0;
 
-        bool canAccelerate = groundedForwardSpeed < maxSpeed;
-        bool canDecelerate = groundedForwardSpeed > maxReverseSpeed;
+            steeringTargetRot = Quaternion.Euler(steeringDeltaAngles);
+            steeringCurrentRot = Quaternion.Lerp(steeringCurrentRot, steeringTargetRot, steeringLerp * Time.fixedDeltaTime);
 
-        float force = 0;
-        if (verticalAxis > 0 && canAccelerate)
-            force = acceleration;
-        else if (verticalAxis < 0 && canDecelerate)
-            force = deceleration;
-        force *= Time.fixedDeltaTime;
+            sphere.MoveRotation(sphere.rotation * steeringCurrentRot);
 
-        sphere.AddForce(groundedForward * force, ForceMode.VelocityChange);
+            sphere.AddForce(groundedForward * forwardSpeed, ForceMode.VelocityChange);
 
-        if (isGrounded && Vector3.Angle(Vector3.up, groundNormal) > 0.1f)
-        {
-            sphere.AddForce(-Physics.gravity, ForceMode.Acceleration);
+            bool canAccelerate = groundedForwardSpeed < maxSpeed;
+            bool canDecelerate = groundedForwardSpeed > maxReverseSpeed;
+
+            float force = 0;
+            if (throttleInput > 0 && canAccelerate)
+                force = acceleration;
+            else if (throttleInput < 0 && canDecelerate)
+                force = deceleration;
+            force *= Time.fixedDeltaTime;
+
+            sphere.AddForce(groundedForward * force, ForceMode.VelocityChange);
+
+            if (isGrounded && Vector3.Angle(Vector3.up, groundNormal) > 0.1f)
+            {
+                sphere.AddForce(-Physics.gravity, ForceMode.Acceleration);
+            }
         }
     }
 

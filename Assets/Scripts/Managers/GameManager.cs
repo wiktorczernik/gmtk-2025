@@ -10,22 +10,53 @@ public class GameManager : MonoBehaviour
 
     public GameLapSettings[] allLapSettings = new GameLapSettings[1];
     public GameLapSettings activeLapSettings;
+
+    #region Components
+    [Header("Components")]
     public KartClone kartClonePrefab;
     public LapManager lapManager;
+    public GameObject timerUI;
+    public GameObject countdownUI;
+    public GameObject pauseUI;
+    public GameObject gameOverUI;
+    #endregion
 
-    KartController kartControllerInstance;
+    KartController _kartControllerInstance;
+
+    public static KartController kartControllerInstance
+    {
+        get => main._kartControllerInstance;
+        private set => main._kartControllerInstance = value;
+    }
 
     static GameManager main;
+
+    public static bool isPaused = false;
+    public static bool isGameOver = false;
 
     private void Awake()
     {
         main = this;
     }
+
+    private void OnDestroy()
+    {
+        main = null;
+    }
+    
     IEnumerator Start()
     {
         yield return null;
         onGameStart?.Invoke();
         OnGameStart();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameOverUI.activeSelf && CountdownController.isCountdownEnd)
+        {
+            OnPause();
+        }
     }
 
     public static void TriggerLapCompletion() => main.StartCoroutine(main.OnLapCompletion());
@@ -51,6 +82,10 @@ public class GameManager : MonoBehaviour
 
     void OnGameStart()
     {
+        isGameOver = false;
+        pauseUI.SetActive(false);
+        gameOverUI.SetActive(false);
+        countdownUI.SetActive(true);
         kartControllerInstance = FindFirstObjectByType<KartController>();
         kartControllerInstance.ApplyLapConfig(0);
         CloneUtils.clonePrefab = kartClonePrefab;
@@ -58,15 +93,39 @@ public class GameManager : MonoBehaviour
         ActivateLapSettings(lapIndex: 0, deactivatePrevious: false);
 
         TimerController.onEnd += OnTimeEnd;
-        lapManager._lapText.text = $"{LapManager.currentLap}th Lap";
-        TimerController.active = true;
-        CloneUtils.RequestStartRecording(kartControllerInstance);
+        lapManager._lapText.text = $"{LapManager.currentLap}st Lap";
+    }
+
+    void OnPause()
+    {
+        isPaused = !isPaused;
+
+        if (isPaused)
+        {
+            Time.timeScale = 0f;
+
+            if (GameObject.FindGameObjectWithTag("TimeAdder"))
+                GameObject.FindGameObjectWithTag("TimeAdder").transform.GetChild(0).gameObject.SetActive(false);
+            timerUI.SetActive(false);
+            pauseUI.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            timerUI.SetActive(true);
+            if (GameObject.FindGameObjectWithTag("TimeAdder"))
+                GameObject.FindGameObjectWithTag("TimeAdder").transform.GetChild(0).gameObject.SetActive(true);
+            pauseUI.SetActive(false);
+        }
     }
 
     void OnTimeEnd()
     {
-        MenuController.ReturnToMenu();
+        gameOverUI.SetActive(true);
+        isGameOver = true;
+        TimerController.onEnd -= OnTimeEnd;
     }
+
     IEnumerator OnLapCompletion()
     {
         lapManager.IncreaseLapCounter();

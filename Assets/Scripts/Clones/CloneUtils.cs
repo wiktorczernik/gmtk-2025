@@ -1,11 +1,8 @@
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Hierarchy;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Playables;
-using UnityEngine.UIElements;
 
 public class CloneUtils : MonoBehaviour
 {
@@ -19,7 +16,14 @@ public class CloneUtils : MonoBehaviour
     public static CloneRecording currentlyRecorded { get; private set; } = null;
     public static readonly List<ClonePlayback> currentlyPlayed = new();
 
+    [Header("Path Settings")]
+    public float pathWidth = 0.5f;
+    public float pathYoffset = -0.2f;
+    public float pathAppearDuration = 1f;
+    public Material pathMaterial;
+
     static CloneUtils main;
+
 
     public static ClonePlayback PlayLooped(CloneRecording recording)
     {
@@ -28,6 +32,8 @@ public class CloneUtils : MonoBehaviour
         playback.cloneInstance = Instantiate(clonePrefab);
         playback.state = ClonePlaybackState.Playing;
         currentlyPlayed.Add(playback);
+        main.StartCoroutine(main.AppearPath(playback));
+
         return playback;
     }
 
@@ -54,6 +60,7 @@ public class CloneUtils : MonoBehaviour
     {
         if (recordingState == RecordingState.AwaitsStart)
         {
+            if (currentlyRecorded == null) return;
             recordingState = RecordingState.Recording;
             currentlyRecorded.duration = 0f;
             var frameState = recordingTarget.GetFrameState();
@@ -61,6 +68,7 @@ public class CloneUtils : MonoBehaviour
         }
         else if (recordingState == RecordingState.AwaitsEnd)
         {
+            if (currentlyRecorded == null) return;
             var finalState = recordingTarget.GetFrameState();
             currentlyRecorded.frames.Add(finalState);
             currentlyRecorded.duration += recordingDeltaTime;
@@ -110,9 +118,19 @@ public class CloneUtils : MonoBehaviour
             currentlyRecorded.frames = finalFrames;
             currentlyRecorded.duration = (finalFrames.Count - 1) * recordingDeltaTime;
             recordingState = RecordingState.Not;
+
+            currentlyRecorded.pathLine = new GameObject().AddComponent<LineRenderer>();
+            List<Vector3> positions = new();
+            foreach (var frame in finalFrames)
+                positions.Add(frame.position + Vector3.up * pathYoffset);
+            currentlyRecorded.pathLine.positionCount = positions.Count;
+            currentlyRecorded.pathLine.SetPositions(positions.ToArray());
+            currentlyRecorded.pathLine.loop = true;
+            currentlyRecorded.pathLine.startWidth = 0f;
         }
         else if (recordingState == RecordingState.Recording)
         {
+            if (currentlyRecorded == null) return;
             var state = recordingTarget.GetFrameState();
             currentlyRecorded.frames.Add(state);
             currentlyRecorded.duration += recordingDeltaTime;
@@ -140,11 +158,34 @@ public class CloneUtils : MonoBehaviour
         }
     }
 
+    IEnumerator AppearPath(ClonePlayback playback)
+    {
+        yield return new WaitUntil(() => playback.recording.pathLine != null);
+        playback.recording.pathLine.material = pathMaterial;
+        float time = 0f;
+        while (time <= pathAppearDuration)
+        {
+            time += Time.deltaTime;
+            float fraction = Mathf.Clamp01(time / pathAppearDuration);
+            playback.recording.pathLine.startWidth = fraction * pathWidth;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
     private void Awake()
     {
         main = this;
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = recordingFrameRate;
+    }
+    private void OnDestroy()
+    {
+        recordingTarget = null;
+        recordingState = RecordingState.Not;
+        clonePrefab = null;
+        currentlyRecorded = null;
+        currentlyPlayed.Clear();
+        main = null;
     }
 
     public enum RecordingState { Not, AwaitsStart, Recording, AwaitsEnd }

@@ -154,6 +154,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Completion 3");
         kartControllerInstance.ApplyLapConfig(LapManager.currentLap - 1);
         ActivateLapSettings(lapIndex: LapManager.currentLap - 1, deactivatePrevious: true);
+        CloneUtils.ResetAllPlayedTime();
     }
 }
 

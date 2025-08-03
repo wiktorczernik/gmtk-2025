@@ -109,7 +109,7 @@ public class KartController : MonoBehaviour, ICloneable
             kartModel.transform.localEulerAngles = new Vector3(kartModel.transform.localEulerAngles.x, 0, kartModel.transform.localEulerAngles.z);
 
             float targetAngle = isDrifting ? targetDriftAngle : targetSteerAngle;
-            float targetDir = isDrifting ? driftDir : steeringInput;
+            float targetDir = isDrifting ? driftDir : steeringInput * currentSpeed;
             modelYawTilt = Mathf.Lerp(modelYawTilt, targetAngle * targetDir, yawTiltLerp * Time.deltaTime);
             kartModel.transform.eulerAngles += new Vector3(0, modelYawTilt, 0);
 
@@ -155,10 +155,13 @@ public class KartController : MonoBehaviour, ICloneable
                 steeringInput = 0;
             }
 
-            Quaternion steeringTargetRot = Quaternion.Euler(steeringInput * steeringAngleSpeed * speedToSteeringCurve.Evaluate(forwardSpeed) * groundNormal * Time.fixedDeltaTime);
+            Quaternion steeringTargetRot = Quaternion.Euler(steeringInput * steeringAngleSpeed * speedToSteeringCurve.Evaluate(Mathf.Abs(forwardSpeed)) * Mathf.Sign(forwardSpeed) * groundNormal * Time.fixedDeltaTime);
+
+            // limit steering to the y axis
             Vector3 steeringDeltaAngles = steeringTargetRot.eulerAngles;
             steeringDeltaAngles.x = 0;
             steeringDeltaAngles.z = 0;
+
             steeringTargetRot = Quaternion.Euler(steeringDeltaAngles);
             steeringCurrentRot = Quaternion.Lerp(steeringCurrentRot, steeringTargetRot, steeringLerp * Time.fixedDeltaTime);
 

@@ -107,6 +107,13 @@ MonoBehaviour:
       Data3: -1840065877
       Data4: 162777879
     Path: event:/kart/kart
+  kartDriftSoundRef:
+    Guid:
+      Data1: 1705305269
+      Data2: 1285158685
+      Data3: 2056090250
+      Data4: -2058009744
+    Path: event:/kart/drift
   lapConfigs:
   - maxSpeed: 40
     acceleration: 65

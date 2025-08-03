@@ -7,6 +7,7 @@ public class KartController : MonoBehaviour, ICloneable
 {
     [Header("Audio")]
     public EventReference kartSoundRef;
+    public EventReference kartDriftSoundRef;
 
     [Header("Lap Settings")]
     public KartLapConfig[] lapConfigs;
@@ -39,6 +40,7 @@ public class KartController : MonoBehaviour, ICloneable
     public bool driftInput = false;
 
     private EventInstance kartAudioInstance;
+    private EventInstance kartDriftAudioInstance;
 
     [Header("State")]
     public Quaternion steeringCurrentRot;
@@ -102,12 +104,14 @@ public class KartController : MonoBehaviour, ICloneable
             {
                 isDrifting = true;
                 driftDir = steeringInput;
+                kartDriftAudioInstance.start();
             }
 
             if (!driftInput || throttleInput < float.Epsilon)
             {
                 isDrifting = false;
                 driftDir = 0;
+                kartDriftAudioInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             }
 
             //Align kart to ground
@@ -238,6 +242,8 @@ public class KartController : MonoBehaviour, ICloneable
         kartAudioInstance = RuntimeManager.CreateInstance(kartSoundRef);
         RuntimeManager.AttachInstanceToGameObject(kartAudioInstance, gameObject);
         kartAudioInstance.start();
+        kartDriftAudioInstance = RuntimeManager.CreateInstance(kartDriftSoundRef);
+        RuntimeManager.AttachInstanceToGameObject(kartDriftAudioInstance, gameObject);
     }
     private void OnDestroy()
     {

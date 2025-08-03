@@ -3,7 +3,22 @@ guid: 546408e2ee312c5429b15f01dd08376d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: track_ground
+    second: {fileID: 2100000, guid: 544a2a6d92944464e96feb8ae28336d4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: track_walls
+    second: {fileID: 2100000, guid: 085d9af174afbdc4a87bf3af99f5a78e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: track_wireframe
+    second: {fileID: 2100000, guid: 11f6f3010abad544287d3cfc3c9c228c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

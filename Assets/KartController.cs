@@ -22,7 +22,7 @@ public class KartController : MonoBehaviour, ICloneable
     [SerializeField] private float yawTiltLerp = 2;
 
     [Header("Control Settings")]
-    public KeyCode driftKey = KeyCode.Space;
+    public static KeyCode driftKey = KeyCode.Space;
 
     [Header("Ground Checking Settings")]
     public float groundMaxDistance = 0.5f;

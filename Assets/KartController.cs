@@ -8,6 +8,7 @@ public class KartController : MonoBehaviour, ICloneable
     [Header("Audio")]
     public EventReference kartSoundRef;
     public EventReference kartDriftSoundRef;
+    public EventReference kartImpactSoundRef;
 
     [Header("Lap Settings")]
     public KartLapConfig[] lapConfigs;
@@ -201,19 +202,11 @@ public class KartController : MonoBehaviour, ICloneable
         }
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            //sphere.linearVelocity = new Vector3(0, 0, 0);
-            //sphere.angularVelocity = new Vector3(0, 0, 0);
-        }
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Wall"))
         {
+            RuntimeManager.PlayOneShot(kartImpactSoundRef);
             Vector3 dir = Vector3.Normalize(transform.position - collision.contacts[0].point);
             sphere.AddForce(dir * 30, ForceMode.VelocityChange);
         }

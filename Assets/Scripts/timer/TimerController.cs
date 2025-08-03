@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using TMPro;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine;
 public class TimerController : MonoBehaviour
 {
     static TimerController main;
+
+    [Header("Audio")]
+    public EventReference timeLowAudio;
 
     #region Components
     [Header("Components")]
@@ -74,6 +78,11 @@ public class TimerController : MonoBehaviour
         {
             time -= Time.deltaTime;
             _timerText.text = string.Format("{0:0.00}", time).Replace(',', '.');
+        }
+
+        if (time == 5 && active)
+        {
+            FMODUnity.RuntimeManager.PlayOneShot(timeLowAudio);
         }
 
         if (time <= 0 && active)

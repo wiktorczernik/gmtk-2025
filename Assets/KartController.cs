@@ -1,8 +1,15 @@
+using FMOD.Studio;
+using FMODUnity;
 using System;
 using UnityEngine;
 
 public class KartController : MonoBehaviour, ICloneable
 {
+    [Header("Audio")]
+    public EventReference kartSoundRef;
+    public EventReference kartDriftSoundRef;
+    public EventReference kartImpactSoundRef;
+
     [Header("Lap Settings")]
     public KartLapConfig[] lapConfigs;
 
@@ -32,6 +39,9 @@ public class KartController : MonoBehaviour, ICloneable
     public float steeringInput = 0.0f;
     public float throttleInput = 0.0f;
     public bool driftInput = false;
+
+    private EventInstance kartAudioInstance;
+    private EventInstance kartDriftAudioInstance;
 
     [Header("State")]
     public Quaternion steeringCurrentRot;
@@ -95,12 +105,14 @@ public class KartController : MonoBehaviour, ICloneable
             {
                 isDrifting = true;
                 driftDir = steeringInput;
+                kartDriftAudioInstance.start();
             }
 
             if (!driftInput || throttleInput < float.Epsilon)
             {
                 isDrifting = false;
                 driftDir = 0;
+                kartDriftAudioInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             }
 
             //Align kart to ground
@@ -122,6 +134,8 @@ public class KartController : MonoBehaviour, ICloneable
                 steeringAngleSpeed = normalSteeringAngleSpeed;
             }
         }
+
+        kartAudioInstance.setParameterByName("speed", Mathf.Clamp01(Mathf.Abs(groundedForwardSpeed / maxSpeed)));
     }
 
     private void FixedUpdate()
@@ -188,19 +202,11 @@ public class KartController : MonoBehaviour, ICloneable
         }
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            //sphere.linearVelocity = new Vector3(0, 0, 0);
-            //sphere.angularVelocity = new Vector3(0, 0, 0);
-        }
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Wall"))
         {
+            RuntimeManager.PlayOneShot(kartImpactSoundRef);
             Vector3 dir = Vector3.Normalize(transform.position - collision.contacts[0].point);
             sphere.AddForce(dir * 30, ForceMode.VelocityChange);
         }
@@ -223,6 +229,19 @@ public class KartController : MonoBehaviour, ICloneable
         maxSpeed += 3;
         //acceleration += 3;
         //deceleration -= 3;
+    }
+    void Start()
+    {
+        kartAudioInstance = RuntimeManager.CreateInstance(kartSoundRef);
+        RuntimeManager.AttachInstanceToGameObject(kartAudioInstance, gameObject);
+        kartAudioInstance.start();
+        kartDriftAudioInstance = RuntimeManager.CreateInstance(kartDriftSoundRef);
+        RuntimeManager.AttachInstanceToGameObject(kartDriftAudioInstance, gameObject);
+    }
+    private void OnDestroy()
+    {
+        kartAudioInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        kartAudioInstance.release();
     }
 }
 

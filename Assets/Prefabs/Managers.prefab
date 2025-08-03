@@ -52,6 +52,13 @@ MonoBehaviour:
     - {fileID: 0}
   activeLapSettings:
     activeGates: []
+  mainAudioEventRef:
+    Guid:
+      Data1: -2012405557
+      Data2: 1158060440
+      Data3: 164509330
+      Data4: 1065240512
+    Path: event:/music/main
   kartClonePrefab: {fileID: 2667294251946721339, guid: fb40da7911a8afc42a5b581303457a56, type: 3}
   lapManager: {fileID: 242066147327043894}
   timerUI: {fileID: 0}

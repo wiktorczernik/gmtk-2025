@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{26d60441-8c02-4c92-a9dd-b6d9d87b32ec}">
+		<property name="assetPath">
+			<value>WhoThis - (Credits).alp.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>186.01795918367347</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{f4b0b98a-ac44-467b-aa90-522904452839}</destination>
+		</relationship>
+	</object>
+</objects>

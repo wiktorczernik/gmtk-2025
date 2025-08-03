@@ -362,6 +362,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbebc59dd4f25ba4ba26346cd27546c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gateBoostSound:
+    Guid:
+      Data1: -592968229
+      Data2: 1305680904
+      Data3: 618328457
+      Data4: -1302552690
+    Path: event:/kart/gateBoost
   _timerObject: {fileID: 0}
   _time: 10
 --- !u!114 &7066212678430819252

@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine;
 public class AddTimeS : MonoBehaviour
 {
     private GameObject _timerObjectCopy;
+
+    [Header("Audio")]
+    public EventReference gateBoostSound;
 
     #region Components
     [Header("Components")]
@@ -31,6 +35,7 @@ public class AddTimeS : MonoBehaviour
         _timerText.GetComponent<TextMeshProUGUI>().text = $"+ {_time}.00";
 
         StartCoroutine(DestroyObject(_timerText.GetComponent<TextMeshProUGUI>()));
+        FMODUnity.RuntimeManager.PlayOneShot(gateBoostSound);
     }
 
     IEnumerator DestroyObject(TextMeshProUGUI text)

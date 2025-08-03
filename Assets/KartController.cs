@@ -79,6 +79,7 @@ public class KartController : MonoBehaviour, ICloneable
     [SerializeField] private float bumpForce;
     [SerializeField] private bool ableToDrive = true;
     private Vector3 ogPos;
+    [SerializeField] private ParticleSystem bumpParticles;
 
     private void Awake()
     {
@@ -221,6 +222,7 @@ public class KartController : MonoBehaviour, ICloneable
             Vector3 dir = Vector3.Normalize(transform.position - collision.contacts[0].point);
             dir = new Vector3(dir.x, 0, dir.z);
             sphere.AddForce(dir * 30, ForceMode.VelocityChange);
+            Instantiate(bumpParticles, collision.contacts[0].point, transform.rotation);
         }
     }
 

@@ -100,6 +100,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3afcc21f7f83d4b459b406bdd3f562fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kartSoundRef:
+    Guid:
+      Data1: -1955306877
+      Data2: 1076051807
+      Data3: -1840065877
+      Data4: 162777879
+    Path: event:/kart/kart
   lapConfigs:
   - maxSpeed: 40
     acceleration: 65

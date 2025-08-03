@@ -1,8 +1,13 @@
+using FMOD.Studio;
+using FMODUnity;
 using System;
 using UnityEngine;
 
 public class KartController : MonoBehaviour, ICloneable
 {
+    [Header("Audio")]
+    public EventReference kartSoundRef;
+
     [Header("Lap Settings")]
     public KartLapConfig[] lapConfigs;
 
@@ -32,6 +37,8 @@ public class KartController : MonoBehaviour, ICloneable
     public float steeringInput = 0.0f;
     public float throttleInput = 0.0f;
     public bool driftInput = false;
+
+    private EventInstance kartAudioInstance;
 
     [Header("State")]
     public Quaternion steeringCurrentRot;
@@ -122,6 +129,8 @@ public class KartController : MonoBehaviour, ICloneable
                 steeringAngleSpeed = normalSteeringAngleSpeed;
             }
         }
+
+        kartAudioInstance.setParameterByName("speed", Mathf.Clamp01(Mathf.Abs(groundedForwardSpeed / maxSpeed)));
     }
 
     private void FixedUpdate()
@@ -223,6 +232,17 @@ public class KartController : MonoBehaviour, ICloneable
         maxSpeed = config.maxSpeed;
         acceleration = config.acceleration;
         deceleration = config.deceleration;
+    }
+    void Start()
+    {
+        kartAudioInstance = RuntimeManager.CreateInstance(kartSoundRef);
+        RuntimeManager.AttachInstanceToGameObject(kartAudioInstance, gameObject);
+        kartAudioInstance.start();
+    }
+    private void OnDestroy()
+    {
+        kartAudioInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        kartAudioInstance.release();
     }
 }
 

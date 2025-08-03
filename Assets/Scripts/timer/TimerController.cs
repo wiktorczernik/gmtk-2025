@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using TMPro;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine;
 public class TimerController : MonoBehaviour
 {
     static TimerController main;
+
+    [Header("Audio")]
+    public EventReference timeLowAudio;
 
     #region Components
     [Header("Components")]
@@ -78,7 +82,7 @@ public class TimerController : MonoBehaviour
 
         if (time == 5 && active)
         {
-            FMODUnity.RuntimeManager.PlayOneShot("{6a5e58ed-0c01-469f-a73b-d314dfc44b5e}");
+            FMODUnity.RuntimeManager.PlayOneShot(timeLowAudio);
         }
 
         if (time <= 0 && active)

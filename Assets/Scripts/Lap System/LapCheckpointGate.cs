@@ -27,6 +27,7 @@ public class LapCheckpointGate : MonoBehaviour
     private IEnumerator TriggerLapGate()
     {
         LapManager.currentCheckpointGate++;
+       
 
         isActive = false;
         yield return null;

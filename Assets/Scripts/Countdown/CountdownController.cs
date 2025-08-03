@@ -34,6 +34,7 @@ public class CountdownController : MonoBehaviour
         _countdownText.color = new Color(1, 0.007843138f, 0);
         _countdownText.text = string.Format("{0:0}", _countdownDefaultTime);
         _countdownTime = _countdownDefaultTime;
+        FMODUnity.RuntimeManager.PlayOneShot("{3c58a345-3da1-479a-9a3c-10a91f92ac2a}");
     }
 
     void Update()
@@ -64,5 +65,6 @@ public class CountdownController : MonoBehaviour
         _countdownUI.SetActive(false);
         _timerUI.SetActive(true);
         TimerController.active = true;
+       
     }
 }

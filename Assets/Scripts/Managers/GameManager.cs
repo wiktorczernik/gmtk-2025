@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour
         gameOverUI.SetActive(true);
         isGameOver = true;
         TimerController.onEnd -= OnTimeEnd;
+        FMODUnity.RuntimeManager.PlayOneShot("{08e10809-a2fc-4480-9568-f9b139ed8ce9}");
     }
 
     IEnumerator OnLapCompletion()
